@@ -1,0 +1,174 @@
+/* frontend/src/pages/Servicios.css */
+
+.servicios-container {
+  font-family: 'Poppins', sans-serif;
+  color: #111827;
+  background-color: #FFFFFF;
+  overflow-x: hidden;
+}
+
+/* --- HERO SECTION --- */
+.servicios-hero {
+  padding: 5rem 5% 3rem;
+  text-align: left;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.hero-tags {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background-color: #F3F4F6;
+  padding: 0.5rem 1.2rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.servicios-hero h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #000000;
+  letter-spacing: -1px;
+  margin-bottom: 1rem;
+}
+
+.servicios-hero p {
+  font-size: 1.15rem;
+  color: #4B5563;
+  max-width: 800px;
+  line-height: 1.6;
+}
+
+/* --- LISTA DE SERVICIOS --- */
+.servicios-content {
+  padding: 5rem 5% 8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8rem; /* Espaciado amplio entre servicios */
+}
+
+.servicio-row {
+  display: flex;
+  align-items: center;
+  gap: 6rem;
+}
+
+.servicio-row.reverse {
+  flex-direction: row-reverse;
+}
+
+.servicio-text {
+  flex: 1;
+}
+
+.servicio-text h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.servicio-text > p {
+  font-size: 1.1rem;
+  color: #4B5563;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+/* Estilos para las listas de características */
+.servicio-features {
+  background-color: #F9FAFB;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  border-left: 4px solid #000000; /* Detalle elegante a la izquierda */
+}
+
+.servicio-features h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 1rem;
+}
+
+.servicio-features ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.servicio-features li {
+  font-size: 1rem;
+  color: #4B5563;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+/* Viñeta personalizada (pequeño círculo negro) */
+.servicio-features li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #000000;
+}
+
+.servicio-image-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.servicio-image {
+  width: 100%;
+  max-width: 550px;
+  height: auto;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.servicio-image:hover {
+  transform: translateY(-5px);
+}
+
+/* --- RESPONSIVIDAD --- */
+@media (max-width: 1024px) {
+  .servicio-row, .servicio-row.reverse {
+    gap: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .servicios-hero {
+    padding: 3rem 5% 2rem;
+  }
+  .servicios-hero h1 {
+    font-size: 2.8rem;
+  }
+  .servicios-content {
+    gap: 5rem;
+  }
+  .servicio-row, .servicio-row.reverse {
+    flex-direction: column;
+    text-align: left;
+  }
+  .servicio-image {
+    max-width: 100%;
+  }
+}

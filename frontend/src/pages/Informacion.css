@@ -1,0 +1,141 @@
+/* frontend/src/pages/Informacion.css */
+
+.informacion-container {
+  font-family: 'Poppins', sans-serif;
+  color: #111827;
+  background-color: #FFFFFF;
+  overflow-x: hidden;
+}
+
+/* --- HERO SECTION --- */
+.informacion-hero {
+  padding: 5rem 5% 2rem;
+  text-align: left;
+  background-color: #FFFFFF;
+}
+
+.hero-tags {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background-color: #F3F4F6;
+  padding: 0.5rem 1.2rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.informacion-hero h1 {
+  font-size: 4rem;
+  font-weight: 800;
+  color: #000000;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+/* --- CONTENIDO PRINCIPAL --- */
+.informacion-content {
+  padding: 2rem 5% 8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6rem; /* Espacio grande entre Términos, Cookies y Aviso Legal */
+}
+
+/* --- SECCIONES LEGALES --- */
+.legal-section {
+  width: 100%;
+}
+
+.legal-section h2 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #000000;
+  margin-bottom: 3rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #E5E7EB; /* Línea separadora sutil debajo del título */
+}
+
+/* Grilla interna de 2 columnas para los puntos */
+.legal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem 5rem; /* 2rem vertical, 5rem horizontal */
+  align-items: start;
+}
+
+.legal-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.legal-item h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 0.8rem;
+  line-height: 1.3;
+}
+
+.legal-item p {
+  font-size: 0.95rem;
+  color: #4B5563; /* Gris corporativo */
+  line-height: 1.8;
+  text-align: justify;
+}
+
+.legal-item ul {
+  list-style: none;
+  padding-left: 1.2rem;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.legal-item li {
+  position: relative;
+  font-size: 0.95rem;
+  color: #4B5563;
+  line-height: 1.6;
+}
+
+/* Viñeta minimalista */
+.legal-item li::before {
+  content: '•';
+  position: absolute;
+  left: -1.2rem;
+  top: 0;
+  color: #000000;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* --- RESPONSIVIDAD --- */
+@media (max-width: 1024px) {
+  .legal-grid {
+    gap: 2rem 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .informacion-hero {
+    padding: 3rem 5% 1rem;
+  }
+  .informacion-hero h1 {
+    font-size: 2.8rem;
+  }
+  .legal-grid {
+    grid-template-columns: 1fr; /* Pasa a 1 sola columna en celulares */
+    gap: 2rem;
+  }
+  .legal-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+  }
+}

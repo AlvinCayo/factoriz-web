@@ -1,0 +1,97 @@
+/* frontend/src/index.css */
+
+/* 1. Definición de Variables con la Paleta de Colores de la Imagen (¡Sin Naranja!) */
+:root {
+  /* Colores Extraídos Directamente del Diseño */
+  --color-primario: #D4AF37;       /* Un dorado rico para los acentos */
+  --color-primario-hover: #C29F27; /* Dorado más oscuro para hover */
+  --color-texto-oscuro: #1A1A1A;  /* Para títulos y menú */
+  --color-texto-gris: #666666;   /* Para subtítulos */
+  --color-borde-oscuro: #333333;  /* Para botones de outline negros */
+  --fuente-principal: 'Poppins', sans-serif;
+}
+
+/* 2. Reset Global y Responsividad Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  /* Usamos rem para tamaños responsivos escalables */
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--fuente-principal);
+  color: var(--color-texto-oscuro);
+  background-color: #FFFFFF;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden; /* Evita scrolls horizontales raros */
+}
+
+/* 3. Utilidades de diseño responsivo (Contenedor centrado) */
+.container {
+  width: 100%;
+  max-width: 1200px; /* Ancho máximo para pantallas grandes */
+  margin: 0 auto;
+  padding: 0 20px; /* Margen interno en móviles */
+}
+
+/* 4. Estilos Globales de Botones Fieles al Diseño */
+.btn {
+  display: inline-block;
+  padding: 12px 28px;
+  font-family: var(--fuente-principal);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 50px; /* Bordes totalmente redondeados tipo píldora */
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  text-align: center;
+}
+
+/* Botón Lleno Dorado ('Ingresar' y 'Conoce la App') */
+.btn-filled-primary {
+  background-color: var(--color-primario);
+  color: #FFFFFF;
+}
+
+.btn-filled-primary:hover {
+  background-color: var(--color-primario-hover);
+  transform: translateY(-2px);
+}
+
+/* Botón Outline Oscuro ('Regístrate') */
+.btn-outline-dark {
+  background-color: transparent;
+  color: var(--color-texto-oscuro);
+  border: 2px solid var(--color-borde-oscuro); /* Grosor del borde idéntico al diseño */
+}
+
+.btn-outline-dark:hover {
+  background-color: var(--color-texto-oscuro);
+  color: #FFFFFF;
+}
+
+/* Botón Outline Dorado ('Ver Valoraciones') */
+.btn-outline-primary {
+  background-color: transparent;
+  color: var(--color-primario);
+  border: 2px solid var(--color-primario);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--color-primario);
+  color: #FFFFFF;
+}
+
+/* Ajustes Responsivos para Fuentes */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px; /* Las fuentes se encogen un poco en móviles */
+  }
+}

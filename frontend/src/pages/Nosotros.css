@@ -1,0 +1,157 @@
+/* frontend/src/pages/Nosotros.css */
+
+.nosotros-container {
+  font-family: 'Poppins', sans-serif;
+  color: #111827;
+  background-color: #FFFFFF; /* Fondo blanco puro */
+  overflow-x: hidden;
+}
+
+/* --- HERO SECTION --- */
+.nosotros-hero {
+  padding: 5rem 5% 2rem;
+  text-align: left; /* Alineado a la izquierda según el diseño */
+  background-color: #FFFFFF;
+}
+
+.hero-tags {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background-color: #F3F4F6; /* Gris muy clarito para las etiquetas */
+  padding: 0.5rem 1.2rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.nosotros-hero h1 {
+  font-size: 4rem;
+  font-weight: 800;
+  color: #000000; /* Negro puro */
+  letter-spacing: -1px;
+}
+
+/* --- CONTENIDO PRINCIPAL --- */
+.nosotros-content {
+  padding: 2rem 5% 8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8rem; /* Espacio MUY amplio entre secciones para respirar */
+}
+
+/* FILAS INTERCALADAS (TEXTO E IMAGEN) */
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 6rem; /* Espacio grande entre el texto y la imagen */
+  position: relative;
+}
+
+/* Invierte el orden para que la imagen quede a la izquierda */
+.info-row.reverse {
+  flex-direction: row-reverse;
+}
+
+/* Marca de agua gigante "FACTORIZ" de fondo */
+.watermark {
+  position: absolute;
+  font-size: 7rem;
+  font-weight: 900;
+  color: #F9FAFB; /* Gris ultra claro, casi invisible */
+  z-index: 0;
+  top: -3rem;
+  left: 0;
+  letter-spacing: 5px;
+  user-select: none;
+  pointer-events: none;
+}
+
+.watermark.right {
+  left: auto;
+  right: 0;
+}
+
+.info-text {
+  flex: 1;
+  position: relative;
+  z-index: 2; /* Por encima de la marca de agua */
+}
+
+.info-text h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #000000; /* Negro puro */
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.info-text p {
+  font-size: 1.1rem;
+  color: #4B5563; /* Gris medio para buena lectura */
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.info-image-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.info-image {
+  width: 100%;
+  max-width: 550px; /* Imagen grande */
+  height: auto;
+  border-radius: 24px; /* Bordes bien redondeados */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06); /* Sombra amplia y suave */
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.info-image:hover {
+  transform: translateY(-5px);
+}
+
+/* --- RESPONSIVIDAD --- */
+@media (max-width: 1024px) {
+  .info-row, .info-row.reverse {
+    gap: 3rem;
+  }
+  .info-image {
+    max-width: 100%;
+  }
+  .watermark {
+    font-size: 5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .nosotros-hero {
+    padding: 3rem 5% 1rem;
+  }
+  .nosotros-hero h1 {
+    font-size: 3rem;
+  }
+  .nosotros-content {
+    gap: 5rem;
+  }
+  .info-row, .info-row.reverse {
+    flex-direction: column; /* En celular se apilan */
+    text-align: center;
+  }
+  .watermark {
+    display: none; /* Ocultamos la marca de agua en móviles por espacio */
+  }
+  .info-text h2 {
+    font-size: 2rem;
+  }
+}

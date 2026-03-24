@@ -1,0 +1,229 @@
+/* frontend/src/components/Footer.css */
+
+.footer-wrapper {
+  background-color: #0A0A0A; /* Fondo oscuro premium */
+  color: #FFFFFF;
+  padding: 4rem 5% 2rem;
+  font-family: var(--font-family, 'Poppins', sans-serif);
+  border-top: 4px solid var(--color-primario, #D4AF37); /* Línea dorada superior */
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr 1.5fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+/* 1. Columna de Marca (Logo y Redes) */
+.footer-brand .footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  text-decoration: none;
+  margin-bottom: 1rem;
+}
+
+.footer-brand .logo-img {
+  height: 40px;
+  object-fit: contain;
+}
+
+.footer-brand p {
+  color: #9CA3AF;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  max-width: 300px;
+}
+
+.social-media p {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.8rem;
+  color: #FFFFFF;
+}
+
+.social-icons {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #1F2937;
+  color: #FFFFFF;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+  background-color: var(--color-primario, #D4AF37);
+  transform: translateY(-3px);
+}
+
+/* 2 y 3. Columnas de Enlaces (Navegador e Información) */
+.footer-column h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #FFFFFF;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.footer-links a {
+  color: #9CA3AF;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: var(--color-primario, #D4AF37);
+}
+
+/* 4. Columna de Contactos */
+.contact-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: #9CA3AF;
+  font-size: 0.95rem;
+}
+
+.contact-icon {
+  color: var(--color-primario, #D4AF37);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+/* 5. Columna de Descarga de App */
+.app-download p {
+  color: #9CA3AF;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.store-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.store-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #1F2937;
+  color: #FFFFFF;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s, transform 0.3s;
+  border: 1px solid #374151;
+  width: fit-content;
+}
+
+.store-badge:hover {
+  background-color: #374151;
+  transform: translateY(-2px);
+  border-color: var(--color-primario, #D4AF37);
+}
+
+.badge-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.badge-small {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-large {
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+/* Bottom Bar */
+.footer-bottom {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid #1F2937;
+  color: #6B7280;
+  font-size: 0.9rem;
+}
+
+/* --- RESPONSIVIDAD --- */
+@media (max-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr; /* 2 columnas en tablet */
+  }
+  .footer-brand, .app-download {
+    grid-column: span 2; /* Ocupan todo el ancho disponible */
+  }
+  .store-badges {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr; /* 1 sola columna en móviles */
+    text-align: center;
+  }
+  .footer-brand, .app-download {
+    grid-column: span 1;
+  }
+  .footer-brand .footer-logo,
+  .social-icons,
+  .contact-item {
+    justify-content: center;
+  }
+  .store-badges {
+    flex-direction: column;
+    align-items: center;
+  }
+  .footer-brand p, .app-download p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.contact-link {
+  color: #9CA3AF;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.contact-link:hover {
+  color: var(--color-primario, #D4AF37);
+}
