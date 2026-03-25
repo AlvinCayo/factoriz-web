@@ -11,7 +11,7 @@
 .nosotros-hero {
   padding: 5rem 5% 2rem;
   text-align: left; /* Alineado a la izquierda según el diseño */
-  background-color: #FFFFFF;
+  background-color: #F2E9E2;
 }
 
 .hero-tags {
@@ -42,7 +42,7 @@
   padding: 2rem 5% 8rem;
   display: flex;
   flex-direction: column;
-  gap: 8rem; /* Espacio MUY amplio entre secciones para respirar */
+  gap: 5rem; /* Espacio MUY amplio entre secciones para respirar */
 }
 
 /* FILAS INTERCALADAS (TEXTO E IMAGEN) */
@@ -86,7 +86,7 @@
 .info-text h2 {
   font-size: 2.5rem;
   font-weight: 800;
-  color: #000000; /* Negro puro */
+  color: #733d3d; /* Negro puro */
   margin-bottom: 1.5rem;
   line-height: 1.2;
 }
@@ -103,15 +103,15 @@
   display: flex;
   justify-content: center;
   position: relative;
-  z-index: 2;
+  z-index: 1;
   width: 100%;
 }
 
 .info-image {
   width: 100%;
-  max-width: 550px; /* Imagen grande */
+  max-width: 300px; /* Imagen grande */
   height: auto;
-  border-radius: 24px; /* Bordes bien redondeados */
+  border-radius: 30px; /* Bordes bien redondeados */
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06); /* Sombra amplia y suave */
   object-fit: cover;
   transition: transform 0.3s ease;

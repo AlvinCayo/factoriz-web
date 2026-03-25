@@ -6,6 +6,10 @@ import './Home.css'; // Hereda estilos del Navbar y Modales
 
 import logoFactoriz from '../assets/logo.png';
 import Footer from '../components/Footer';
+import objetivos from '../assets/objetivo.jpg';
+import quienesSomos from '../assets/quienes.jpg';
+import mision from '../assets/mision.jpg';
+import vision from '../assets/vision.jpg';
 
 const Nosotros: React.FC = () => {
   // --- ESTADOS PARA MODALES ---
@@ -219,7 +223,7 @@ const Nosotros: React.FC = () => {
           </div>
           <div className="info-image-wrapper">
             {/* Reemplaza este link por la ruta de tu imagen real, ej: src="/objetivo.jpg" */}
-            <img src="https://via.placeholder.com/600x450/E5E7EB/6B7280?text=Tu+Imagen+Aquí" alt="Objetivo Factoriz" className="info-image" />
+            <img src={objetivos} alt="Objetivo Factoriz" className="info-image" />
           </div>
         </section>
 
@@ -237,7 +241,7 @@ const Nosotros: React.FC = () => {
           </div>
           <div className="info-image-wrapper">
             {/* Reemplaza este link por la ruta de tu imagen real */}
-            <img src="https://via.placeholder.com/600x450/E5E7EB/6B7280?text=Tu+Imagen+Aquí" alt="Equipo Factoriz" className="info-image" />
+            <img src={quienesSomos} alt="Equipo Factoriz" className="info-image" />
           </div>
         </section>
 
@@ -252,7 +256,7 @@ const Nosotros: React.FC = () => {
           </div>
           <div className="info-image-wrapper">
             {/* Reemplaza este link por la ruta de tu imagen real */}
-            <img src="https://via.placeholder.com/600x450/E5E7EB/6B7280?text=Tu+Imagen+Aquí" alt="Misión Factoriz" className="info-image" />
+            <img src={mision} alt="Misión Factoriz" className="info-image" />
           </div>
         </section>
 
@@ -266,7 +270,7 @@ const Nosotros: React.FC = () => {
           </div>
           <div className="info-image-wrapper">
             {/* Reemplaza este link por la ruta de tu imagen real */}
-            <img src="https://via.placeholder.com/600x450/E5E7EB/6B7280?text=Tu+Imagen+Aquí" alt="Visión Factoriz" className="info-image" />
+            <img src={vision} alt="Visión Factoriz" className="info-image" />
           </div>
         </section>
 

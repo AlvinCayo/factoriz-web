@@ -6,7 +6,11 @@ import './Home.css'; // Hereda estilos del Navbar y Modales
 
 import logoFactoriz from '../assets/logo.png';
 import Footer from '../components/Footer';
-
+import mackreserva from '../assets/mackreserva.png';
+import mackgeolocalizacion from '../assets/mackubica.png';
+import mackfacial from '../assets/mackfacial.png';
+import mackdashboard from '../assets/mackdash.png';
+import interaccion from '../assets/interaccion.jpg';
 const Servicios: React.FC = () => {
   // --- ESTADOS PARA MODALES ---
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -228,7 +232,7 @@ const Servicios: React.FC = () => {
             </div>
           </div>
           <div className="servicio-image-wrapper">
-            <img src="https://via.placeholder.com/600x450/F3F4F6/9CA3AF?text=Imagen+Reservas" alt="Gestión de reservas" className="servicio-image" />
+            <img src={mackreserva} alt="Gestión de reservas" className="servicio-image" />
           </div>
         </section>
 
@@ -249,7 +253,7 @@ const Servicios: React.FC = () => {
             </div>
           </div>
           <div className="servicio-image-wrapper">
-            <img src="https://via.placeholder.com/600x450/F3F4F6/9CA3AF?text=Imagen+Geolocalización" alt="Geolocalización" className="servicio-image" />
+            <img src={mackgeolocalizacion} alt="Geolocalización" className="servicio-image" />
           </div>
         </section>
 
@@ -270,7 +274,7 @@ const Servicios: React.FC = () => {
             </div>
           </div>
           <div className="servicio-image-wrapper">
-            <img src="https://via.placeholder.com/600x450/F3F4F6/9CA3AF?text=Imagen+Análisis+Facial" alt="Análisis Facial" className="servicio-image" />
+            <img src={mackfacial} alt="Análisis Facial" className="servicio-image" />
           </div>
         </section>
 
@@ -291,7 +295,7 @@ const Servicios: React.FC = () => {
             </div>
           </div>
           <div className="servicio-image-wrapper">
-            <img src="https://via.placeholder.com/600x450/F3F4F6/9CA3AF?text=Imagen+Gestión" alt="Herramientas de gestión" className="servicio-image" />
+            <img src={mackdashboard} alt="Herramientas de gestión" className="servicio-image" />
           </div>
         </section>
 
@@ -312,7 +316,7 @@ const Servicios: React.FC = () => {
             </div>
           </div>
           <div className="servicio-image-wrapper">
-            <img src="https://via.placeholder.com/600x450/F3F4F6/9CA3AF?text=Imagen+Conexión" alt="Conexión clientes y negocios" className="servicio-image" />
+            <img src={interaccion} alt="Conexión clientes y negocios" className="servicio-image" />
           </div>
         </section>
 
