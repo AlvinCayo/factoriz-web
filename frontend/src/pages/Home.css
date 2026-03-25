@@ -23,12 +23,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 5%;
+  padding: 1rem 5%;
   background-color: var(--bg-main);
   border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
   z-index: 1000;
+
 }
 
 /* Contenedor del Logo */
@@ -38,13 +39,12 @@
   gap: 10px;
   text-decoration: none;
   color: var(--accent-color);
-  font-size: 1.5rem;
-  font-weight: 800;
+  
 }
 
 .logo-img {
-  height: 40px; /* Ajusta esto según el tamaño de tu logo */
-  width: auto;
+  height: 90px; /* Ajusta esto según el tamaño de tu logo */
+  width: 80;
   object-fit: contain;
 }
 
@@ -110,7 +110,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.1; /* Transparencia para que no opaque el texto */
+  opacity: 0.9; /* Transparencia para que no opaque el texto */
   z-index: 0;
   pointer-events: none;
 }
@@ -140,16 +140,35 @@
 .hero h1 {
   font-size: 4rem;
   font-weight: 800;
-  letter-spacing: -1px;
-  margin-bottom: 1.5rem;
+  color: white;
+  
 }
 
 .hero p {
+  /* Estilos de Texto */
+  font-size: 1.1rem;
+  color: white; /* Blanco puro, o el crema #F2E9E2 */
+  line-height: 1.6;
+  text-align: center;
+  opacity: 1;         /* IMPORTANTÍSIMO: Asegurar legibilidad */
+  font-weight: 500;   /* Un poco más grueso para leerse bien */
+
+  /* Estilos de Contenedor */
   max-width: 700px;
   margin: 0 auto 2.5rem;
-  font-size: 1.1rem;
-  color: var(--text-muted);
-  line-height: 1.6;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+
+  /* --- EL TRUCO DEL DESENFOQUE --- */
+  
+  /* 1. Fondo semitransparente oscuro (puedes usar un burdeos con alfa) */
+  background-color: rgba(78, 22, 31, 0.6); /* Burdeos oscuro al 60% de opacidad */
+  
+  /* 2. El efecto de desenfoque (backdrop-filter) */
+  backdrop-filter: blur(15px); /* Desenfoque de 10 píxeles */
+  
+  /* 3. Borde sutil para definir la forma */
+  border: 1px solid rgba(242, 233, 226, 0.2); /* Borde crema muy tenue */
 }
 
 .btn-main {
@@ -193,33 +212,126 @@
 }
 
 .card {
-  background-color: var(--bg-main);
+  position: relative; /* Necesario para el overlay */
+  min-height: 250px;  /* Altura mínima para que luzca la foto */
   padding: 2.5rem;
   border-radius: 16px;
   text-align: center;
-  border: 1px solid var(--border-color);
-  transition: box-shadow 0.3s;
+  overflow: hidden;   /* Para que el overlay no se salga de las esquinas */
+  
+  /* Configuración de imagen de fondo */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  border: none;
 }
 
-.card:hover {
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+/* Capa oscura para que el texto sea legible */
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(78, 22, 31, 0.6); /* El burdeos oscuro de tu paleta con transparencia */
+  transition: background 0.3s ease;
+  z-index: 1;
 }
 
-.card-icon {
-  width: 60px;
-  height: 60px;
-  margin: 0 auto 1.5rem;
-  object-fit: contain;
+/* Contenedor del texto para que esté por encima del overlay */
+.card-content {
+  position: relative;
+  z-index: 2;
 }
 
 .card h3 {
-  font-size: 1.4rem;
-  margin-bottom: 1rem;
+  font-size: 1.6rem;
+  color: #F2E9E2; /* Color crema de tu paleta */
+  margin: 0;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.card p {
-  color: var(--text-muted);
-  line-height: 1.5;
+/* Efecto al pasar el mouse */
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card:hover .card-overlay {
+  background: rgba(105, 21, 31, 0.8); /* Se vuelve un poco más sólido al hacer hover */
+}
+/*servicios diseno*/
+/* --- Estilos Generales de la Sección --- */
+#servicios.section {
+  padding: 8rem 0; /* Aumentamos el padding para darle aire */
+  position: relative;
+  overflow: hidden; /* Para contener los elementos de fondo */
+  
+  /* --- FONDO DE LA SECCIÓN (Con Color y Blur) --- */
+  
+  /* 1. Usamos el crema claro (#F2E9E2) como base translúcida */
+  background-color: rgba(242, 233, 226, 0.5); 
+  
+  /* 2. El efecto de desenfoque (blur) moderno */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px); /* Para Safari y navegadores antiguos */
+  
+  /* 3. Un borde sutil para definir la forma de "panel" */
+  border: 1px solid rgba(171, 145, 115, 0.2); /* Borde arena muy tenue */
+  
+  /* 4. Bordes redondeados y sombra sutil */
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  
+  /* 5. Aseguramos que el contenido esté por encima de cualquier elemento decorativo */
+  z-index: 1;
+}
+
+/* --- TÍTULO DE LA SECCIÓN (Con Color) --- */
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  
+  /* Usamos el burdeos oscuro (#4E161F) para autoridad */
+  color: #4E161F;
+  
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* --- SUBTÍTULO DE LA SECCIÓN (Con Color y Contraste) --- */
+.section-subtitle {
+  text-align: center;
+  max-width: 800px; /* Centramos y limitamos el ancho para legibilidad */
+  margin: 0 auto; /* Centrado horizontal */
+  font-size: 1.2rem;
+  line-height: 1.7;
+  
+  /* Usamos un burdeos más claro (#6F1F28) o el gris oscuro de tu paleta */
+  color: rgba(111, 31, 40, 0.9);
+  
+  font-weight: 400;
+}
+
+/* --- AJUSTE RESPONSIVO (Opcional pero recomendado) --- */
+@media (max-width: 768px) {
+  #servicios.section {
+    padding: 6rem 1rem;
+    border-radius: 0; /* Quizás en móvil no quieras bordes redondeados */
+  }
+  .section-title {
+    font-size: 2rem;
+  }
+  .section-subtitle {
+    font-size: 1.1rem;
+    padding: 0 1rem;
+  }
 }
 
 /* --- NUEVA SECCIÓN: FEATURES INTERCALADOS (App Screens) --- */
@@ -282,32 +394,145 @@
   z-index: -1;
 }
 
-/* --- ESTADÍSTICAS --- */
+/* Contenedor Grid */
+.grid-benefits {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 0 1rem;
+}
+
+/* Tarjeta de Beneficio */
+.benefit-card {
+  background: #ffffff;
+  padding: 3rem 2rem;
+  border-radius: 20px;
+  text-align: center;
+  border: 1px solid rgba(171, 145, 115, 0.15); /* Borde arena muy suave */
+  transition: all 0.4s ease;
+  position: relative;
+}
+
+.benefit-card:hover {
+  transform: translateY(-10px);
+  border-color: #AB9173; /* El dorado de tu paleta */
+  box-shadow: 0 20px 40px rgba(78, 22, 31, 0.08);
+}
+
+/* El Icono (Círculo Dorado) */
+.benefit-icon-wrapper {
+  width: 70px;
+  height: 70px;
+  background: #F2E9E2; /* Crema claro */
+  border-radius: 50%;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+.benefit-card:hover .benefit-icon-wrapper {
+  background: #AB9173; /* Cambia a dorado en hover */
+}
+
+/* Punto o icono dentro del círculo */
+.icon-dot {
+  width: 12px;
+  height: 12px;
+  background: #6F1F28; /* Burdeos */
+  border-radius: 50%;
+}
+
+.iconobeni{
+  width: 50px;
+  height: 50px;
+  background: #F2E9E2; /* Crema claro */
+  border-radius: 50%;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+/* Títulos */
+.benefit-card h3 {
+  color: #4E161F; /* Burdeos Oscuro */
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+/* Línea decorativa debajo del título */
+.benefit-line {
+  width: 40px;
+  height: 3px;
+  background: #AB9173;
+  margin: 0 auto 1.5rem;
+  border-radius: 2px;
+}
+
+/* Párrafos */
+.benefit-card p {
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* --- ESTADÍSTICAS MEJORADAS --- */
 .stats-container {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
   gap: 2rem;
   margin-top: 4rem;
-  padding-top: 3rem;
-  border-top: 1px solid var(--border-color);
+  padding: 4rem 2rem; /* Más espacio */
+  background: #4E161F; /* El burdeos oscuro que usamos antes */
+  border-radius: 20px;
+  border: 1px solid rgba(171, 145, 115, 0.3); /* Borde dorado tenue */
 }
 
 .stat-item {
   text-align: center;
+  /* Animación de entrada */
+  animation: fadeInUp 1s ease forwards;
+  opacity: 0;
 }
 
+/* Retraso para que aparezcan uno por uno */
+.stat-item:nth-child(1) { animation-delay: 0.2s; }
+.stat-item:nth-child(2) { animation-delay: 0.4s; }
+.stat-item:nth-child(3) { animation-delay: 0.6s; }
+.stat-item:nth-child(4) { animation-delay: 0.8s; }
+.stat-item:nth-child(5) { animation-delay: 1s; }
+
 .stat-number {
-  font-size: 2.5rem;
+  font-size: 3rem; /* Un poco más grandes */
   font-weight: 800;
-  color: var(--accent-color);
+  color: #AB9173; /* Dorado de AURA */
   display: block;
+  text-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 .stat-label {
-  color: var(--text-muted);
+  color: #F2E9E2; /* Crema para lectura sobre oscuro */
   font-weight: 500;
   margin-top: 0.5rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Definición de la animación horizontal/vertical */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* --- EQUIPO --- */
