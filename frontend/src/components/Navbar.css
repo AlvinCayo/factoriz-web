@@ -1,0 +1,150 @@
+/* frontend/src/components/Navbar.css */
+
+/* --- ESTILOS GLOBALES DEL HEADER --- */
+.navbar-header {
+  width: 100%;
+  background-color: #FFFFFF;
+  padding: 10px 0; /* Padding reducido para compensar el logo grande */
+  position: sticky;
+  top: 0;
+  zIndex: 1000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+  transition: all 0.3s ease;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5%; /* Margen de seguridad a los lados */
+}
+
+/* --- ESTILOS DEL LOGO (Aquí está la magia) --- */
+.navbar-logo-container {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.navbar-logo-container:hover {
+  transform: scale(1.02); /* Pequeño efecto al pasar el mouse */
+}
+
+.navbar-logo-img {
+  /* TAMAÑO ESCRITORIO: Muy grande para que se note */
+  height: 130px; 
+  width: auto; /* Mantiene proporción */
+  object-fit: contain;
+  cursor: pointer;
+  transition: height 0.3s ease; /* Transición suave al cambiar de tamaño */
+}
+
+/* --- MENÚ Y BOTONES ESCRITORIO --- */
+.navbar-menu-escritorio {
+  display: flex;
+  gap: 30px;
+}
+
+.navbar-menu-link {
+  font-family: var(--fuente-principal);
+  font-weight: 600;
+  font-size: 1rem;
+  color: #000000;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.navbar-menu-link:hover {
+  color: var(--color-primario); /* O el color que uses de acento */
+}
+
+.navbar-botones-escritorio {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* --- BOTÓN MÓVIL (Hamburguesa) --- */
+.navbar-mobile-menu-btn {
+  background: none;
+  border: none;
+  color: #000000;
+  cursor: pointer;
+  display: none; /* Oculto en escritorio */
+  padding: 5px;
+  transition: transform 0.2s ease;
+}
+
+.navbar-mobile-menu-btn:active {
+  transform: scale(0.9);
+}
+
+/* --- MENÚ DESPLEGABLE MÓVIL --- */
+.navbar-mobile-menu-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #FFFFFF;
+  padding: 20px 5%;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  box-sizing: border-box;
+  animation: slideDown 0.3s ease-out;
+}
+
+.navbar-mobile-link {
+  font-family: var(--fuente-principal);
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #000000;
+  text-decoration: none;
+  padding: 12px 0;
+  border-bottom: 1px solid #EEEEEE;
+}
+
+.navbar-mobile-buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* --- RESPONSIVIDAD (Media Queries Reales) --- */
+
+/* Tabletas y Móviles (Menos de 991px) */
+@media (max-width: 991px) {
+  
+  .navbar-logo-img {
+    /* TAMAÑO MÓVIL: Se reduce para no ocupar toda la pantalla */
+    height: 80px; 
+  }
+
+  .navbar-menu-escritorio,
+  .navbar-botones-escritorio {
+    display: none; /* Ocultamos elementos de escritorio */
+  }
+
+  .navbar-mobile-menu-btn {
+    display: block; /* Mostramos botón hamburguesa */
+  }
+}
+
+/* Móviles pequeños (Menos de 480px) */
+@media (max-width: 480px) {
+  .navbar-logo-img {
+    height: 65px; /* Aún más pequeño en móviles muy chicos */
+  }
+  .navbar-header {
+    padding: 5px 0;
+  }
+}
+
+/* Animación simple para el menú móvil */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
