@@ -1,0 +1,77 @@
+/* frontend/src/components/FloatingDownload.css */
+
+/* --- CONTENEDOR PRINCIPAL (Posición Stacked) --- */
+.floating-download-container {
+  position: fixed;
+  /* El botón Nav (Izquierda) está a bottom: 30px. 
+     Lo ponemos lo suficientemente arriba para que no choque si el menú abre. */
+  bottom: 30px; 
+  left: 30px; /* Alineado a la izquierda */
+  z-index: 9998; /* Justo debajo del menú nav si abriera alto */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Alineación a la izquierda */
+}
+
+/* --- ESTILOS DEL BOTÓN (Más pequeño, premium) --- */
+.floating-download-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Espacio más estrecho */
+  background-color: #000000; /* Fondo negro elegante de Factoriz */
+  color: #FFFFFF;
+  border: 2px solid #000000;
+  /* Padding reducido para tamaño "pequeño" */
+  padding: 10px 18px; 
+  border-radius: 50px; /* Bordes redondeados modernos */
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  /* Tamaño de fuente más pequeño (sutil) */
+  font-size: 0.85rem; 
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  
+  /* --- EL EFECTO: Pulso de Resplandor Continuo --- */
+  animation: pulseGlow 2s infinite;
+}
+
+/* Efecto al pasar el mouse (Hover) */
+.floating-download-btn:hover {
+  background-color: #FFFFFF;
+  color: #000000;
+  transform: translateY(-3px) scale(1.03); /* Sube suavemente */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  animation: none; /* Detiene el pulso para enfoque nítido */
+}
+
+/* --- ANIMACIONES --- */
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+  }
+  70% {
+    /* El halo se expande y se vuelve transparente */
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
+
+/* =========================================
+   RESPONSIVIDAD (MÓVILES)
+   ========================================= */
+@media (max-width: 768px) {
+  .floating-download-container {
+    bottom: 100px; /* Un poco más abajo para móviles */
+    left: 20px; /* Menos margen lateral */
+  }
+  
+  .floating-download-btn {
+    padding: 8px 14px; /* Aún más compacto en celulares */
+    font-size: 0.75rem; /* Fuente micro-sutil */
+    gap: 6px;
+  }
+}

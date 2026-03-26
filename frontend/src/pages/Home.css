@@ -29,7 +29,6 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-
 }
 
 /* Contenedor del Logo */
@@ -39,7 +38,6 @@
   gap: 10px;
   text-decoration: none;
   color: var(--accent-color);
-  
 }
 
 .logo-img {
@@ -93,6 +91,31 @@
   background-color: var(--accent-hover);
 }
 
+/* --- BOTÓN DESCARGAR APP --- */
+.btn-descargar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #000000; /* Fondo negro elegante */
+  color: #FFFFFF;
+  border: 2px solid #000000;
+  padding: 8px 16px;
+  border-radius: 30px; /* Bordes redondeados modernos */
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-descargar:hover {
+  background-color: #FFFFFF;
+  color: #000000;
+  transform: translateY(-2px); /* Pequeño salto al pasar el mouse */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
 /* --- HERO SECTION --- */
 .hero {
   position: relative; /* Para poder posicionar el fondo */
@@ -102,7 +125,7 @@
   overflow: hidden;
 }
 
-/* Imagen de fondo del Hero (opcional, detrás del texto) */
+/* Imagen de fondo del Hero */
 .hero-bg {
   position: absolute;
   top: 0;
@@ -141,17 +164,16 @@
   font-size: 4rem;
   font-weight: 800;
   color: white;
-  
 }
 
 .hero p {
   /* Estilos de Texto */
   font-size: 1.1rem;
-  color: white; /* Blanco puro, o el crema #F2E9E2 */
+  color: white; 
   line-height: 1.6;
   text-align: center;
-  opacity: 1;         /* IMPORTANTÍSIMO: Asegurar legibilidad */
-  font-weight: 500;   /* Un poco más grueso para leerse bien */
+  opacity: 1; 
+  font-weight: 500; 
 
   /* Estilos de Contenedor */
   max-width: 700px;
@@ -159,16 +181,10 @@
   padding: 1rem 1.5rem;
   border-radius: 12px;
 
-  /* --- EL TRUCO DEL DESENFOQUE --- */
-  
-  /* 1. Fondo semitransparente oscuro (puedes usar un burdeos con alfa) */
-  background-color: rgba(78, 22, 31, 0.6); /* Burdeos oscuro al 60% de opacidad */
-  
-  /* 2. El efecto de desenfoque (backdrop-filter) */
-  backdrop-filter: blur(15px); /* Desenfoque de 10 píxeles */
-  
-  /* 3. Borde sutil para definir la forma */
-  border: 1px solid rgba(242, 233, 226, 0.2); /* Borde crema muy tenue */
+  /* EL TRUCO DEL DESENFOQUE */
+  background-color: rgba(78, 22, 31, 0.6); 
+  backdrop-filter: blur(15px); 
+  border: 1px solid rgba(242, 233, 226, 0.2); 
 }
 
 .btn-main {
@@ -204,7 +220,7 @@
   font-size: 1.1rem;
 }
 
-/* --- GRID CARDS (Servicios e Iconos) --- */
+/* --- GRID CARDS --- */
 .grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -212,14 +228,12 @@
 }
 
 .card {
-  position: relative; /* Necesario para el overlay */
-  min-height: 250px;  /* Altura mínima para que luzca la foto */
+  position: relative;
+  min-height: 250px; 
   padding: 2.5rem;
   border-radius: 16px;
   text-align: center;
-  overflow: hidden;   /* Para que el overlay no se salga de las esquinas */
-  
-  /* Configuración de imagen de fondo */
+  overflow: hidden; 
   background-size: cover;
   background-position: center;
   display: flex;
@@ -229,19 +243,17 @@
   border: none;
 }
 
-/* Capa oscura para que el texto sea legible */
 .card-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(78, 22, 31, 0.6); /* El burdeos oscuro de tu paleta con transparencia */
+  background: rgba(78, 22, 31, 0.6); 
   transition: background 0.3s ease;
   z-index: 1;
 }
 
-/* Contenedor del texto para que esté por encima del overlay */
 .card-content {
   position: relative;
   z-index: 2;
@@ -249,89 +261,45 @@
 
 .card h3 {
   font-size: 1.6rem;
-  color: #F2E9E2; /* Color crema de tu paleta */
+  color: #F2E9E2; 
   margin: 0;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-/* Efecto al pasar el mouse */
 .card:hover {
   transform: translateY(-5px);
 }
 
 .card:hover .card-overlay {
-  background: rgba(105, 21, 31, 0.8); /* Se vuelve un poco más sólido al hacer hover */
+  background: rgba(105, 21, 31, 0.8); 
 }
-/*servicios diseno*/
-/* --- Estilos Generales de la Sección --- */
+
+/* --- SERVICIOS DISEÑO --- */
 #servicios.section {
-  padding: 8rem 0; /* Aumentamos el padding para darle aire */
+  padding: 8rem 0; 
   position: relative;
-  overflow: hidden; /* Para contener los elementos de fondo */
-  
-  /* --- FONDO DE LA SECCIÓN (Con Color y Blur) --- */
-  
-  /* 1. Usamos el crema claro (#F2E9E2) como base translúcida */
+  overflow: hidden; 
   background-color: rgba(242, 233, 226, 0.5); 
-  
-  /* 2. El efecto de desenfoque (blur) moderno */
   backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px); /* Para Safari y navegadores antiguos */
-  
-  /* 3. Un borde sutil para definir la forma de "panel" */
-  border: 1px solid rgba(171, 145, 115, 0.2); /* Borde arena muy tenue */
-  
-  /* 4. Bordes redondeados y sombra sutil */
+  -webkit-backdrop-filter: blur(15px); 
+  border: 1px solid rgba(171, 145, 115, 0.2); 
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  
-  /* 5. Aseguramos que el contenido esté por encima de cualquier elemento decorativo */
   z-index: 1;
 }
 
-/* --- TÍTULO DE LA SECCIÓN (Con Color) --- */
-.section-title {
-  text-align: center;
-  font-size: 2.5rem;
-  font-weight: 700;
-  
-  /* Usamos el burdeos oscuro (#4E161F) para autoridad */
+#servicios .section-title {
   color: #4E161F;
-  
   margin-bottom: 2rem;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-/* --- SUBTÍTULO DE LA SECCIÓN (Con Color y Contraste) --- */
-.section-subtitle {
-  text-align: center;
-  max-width: 800px; /* Centramos y limitamos el ancho para legibilidad */
-  margin: 0 auto; /* Centrado horizontal */
-  font-size: 1.2rem;
-  line-height: 1.7;
-  
-  /* Usamos un burdeos más claro (#6F1F28) o el gris oscuro de tu paleta */
+#servicios .section-subtitle {
   color: rgba(111, 31, 40, 0.9);
-  
   font-weight: 400;
-}
-
-/* --- AJUSTE RESPONSIVO (Opcional pero recomendado) --- */
-@media (max-width: 768px) {
-  #servicios.section {
-    padding: 6rem 1rem;
-    border-radius: 0; /* Quizás en móvil no quieras bordes redondeados */
-  }
-  .section-title {
-    font-size: 2rem;
-  }
-  .section-subtitle {
-    font-size: 1.1rem;
-    padding: 0 1rem;
-  }
 }
 
 /* --- NUEVA SECCIÓN: FEATURES INTERCALADOS (App Screens) --- */
@@ -342,7 +310,6 @@
   margin-bottom: 6rem;
 }
 
-/* Clase para invertir el orden (Imagen a la izquierda, texto a la derecha) */
 .feature-row.reverse {
   flex-direction: row-reverse;
 }
@@ -374,14 +341,13 @@
 
 .feature-mockup {
   width: 100%;
-  max-width: 350px; /* Tamaño del teléfono */
+  max-width: 350px; 
   height: auto;
   border-radius: 20px;
   box-shadow: 0 20px 40px rgba(0,0,0,0.1);
   object-fit: cover;
 }
 
-/* Decoración de fondo para el teléfono (opcional, como en el diseño) */
 .feature-image-wrapper::before {
   content: '';
   position: absolute;
@@ -394,7 +360,7 @@
   z-index: -1;
 }
 
-/* Contenedor Grid */
+/* Contenedor Grid Beneficios */
 .grid-benefits {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -402,28 +368,26 @@
   padding: 0 1rem;
 }
 
-/* Tarjeta de Beneficio */
 .benefit-card {
   background: #ffffff;
   padding: 3rem 2rem;
   border-radius: 20px;
   text-align: center;
-  border: 1px solid rgba(171, 145, 115, 0.15); /* Borde arena muy suave */
+  border: 1px solid rgba(171, 145, 115, 0.15); 
   transition: all 0.4s ease;
   position: relative;
 }
 
 .benefit-card:hover {
   transform: translateY(-10px);
-  border-color: #AB9173; /* El dorado de tu paleta */
+  border-color: #AB9173; 
   box-shadow: 0 20px 40px rgba(78, 22, 31, 0.08);
 }
 
-/* El Icono (Círculo Dorado) */
 .benefit-icon-wrapper {
   width: 70px;
   height: 70px;
-  background: #F2E9E2; /* Crema claro */
+  background: #F2E9E2; 
   border-radius: 50%;
   margin: 0 auto 1.5rem;
   display: flex;
@@ -433,37 +397,34 @@
 }
 
 .benefit-card:hover .benefit-icon-wrapper {
-  background: #AB9173; /* Cambia a dorado en hover */
+  background: #AB9173; 
 }
 
-/* Punto o icono dentro del círculo */
 .icon-dot {
   width: 12px;
   height: 12px;
-  background: #6F1F28; /* Burdeos */
+  background: #6F1F28; 
   border-radius: 50%;
 }
 
 .iconobeni{
   width: 50px;
   height: 50px;
-  background: #F2E9E2; /* Crema claro */
+  background: #F2E9E2; 
   border-radius: 50%;
   margin: 0 auto 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
-/* Títulos */
+
 .benefit-card h3 {
-  color: #4E161F; /* Burdeos Oscuro */
+  color: #4E161F; 
   font-size: 1.3rem;
   margin-bottom: 1rem;
   font-weight: 700;
 }
 
-/* Línea decorativa debajo del título */
 .benefit-line {
   width: 40px;
   height: 3px;
@@ -472,34 +433,31 @@
   border-radius: 2px;
 }
 
-/* Párrafos */
 .benefit-card p {
   color: #555;
   font-size: 1rem;
   line-height: 1.6;
 }
 
-/* --- ESTADÍSTICAS MEJORADAS --- */
+/* --- ESTADÍSTICAS --- */
 .stats-container {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
   gap: 2rem;
   margin-top: 4rem;
-  padding: 4rem 2rem; /* Más espacio */
-  background: #4E161F; /* El burdeos oscuro que usamos antes */
+  padding: 4rem 2rem; 
+  background: #4E161F; 
   border-radius: 20px;
-  border: 1px solid rgba(171, 145, 115, 0.3); /* Borde dorado tenue */
+  border: 1px solid rgba(171, 145, 115, 0.3); 
 }
 
 .stat-item {
   text-align: center;
-  /* Animación de entrada */
   animation: fadeInUp 1s ease forwards;
   opacity: 0;
 }
 
-/* Retraso para que aparezcan uno por uno */
 .stat-item:nth-child(1) { animation-delay: 0.2s; }
 .stat-item:nth-child(2) { animation-delay: 0.4s; }
 .stat-item:nth-child(3) { animation-delay: 0.6s; }
@@ -507,15 +465,15 @@
 .stat-item:nth-child(5) { animation-delay: 1s; }
 
 .stat-number {
-  font-size: 3rem; /* Un poco más grandes */
+  font-size: 3rem; 
   font-weight: 800;
-  color: #AB9173; /* Dorado de AURA */
+  color: #AB9173; 
   display: block;
   text-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 .stat-label {
-  color: #F2E9E2; /* Crema para lectura sobre oscuro */
+  color: #F2E9E2; 
   font-weight: 500;
   margin-top: 0.5rem;
   font-size: 0.9rem;
@@ -523,16 +481,9 @@
   letter-spacing: 1px;
 }
 
-/* Definición de la animación horizontal/vertical */
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* --- EQUIPO --- */
@@ -620,133 +571,163 @@
   font-size: 0.9rem;
 }
 
-/* --- RESPONSIVIDAD --- */
-@media (max-width: 1024px) {
-  .grid-4 { grid-template-columns: repeat(2, 1fr); }
-  .hero h1 { font-size: 3.5rem; }
-  .feature-row, .feature-row.reverse {
-    flex-direction: column;
-    text-align: center;
-    gap: 2rem;
-  }
-}
 
-@media (max-width: 768px) {
-  .nav-links { display: none; }
-  .hero h1 { font-size: 2.5rem; }
-  .grid-3, .grid-4 { grid-template-columns: 1fr; }
-  .footer-top { grid-template-columns: 1fr; text-align: center; }
-  .app-buttons { justify-content: center; }
-  .stats-container { grid-template-columns: repeat(2, 1fr); display: grid; }
-}
+/* =========================================
+   MODALES (LOGIN / REGISTRO) - DISEÑO PREMIUM
+   ========================================= */
 
-/* --- MODALES DE LOGIN Y REGISTRO --- */
+/* Fondo oscuro con efecto de cristal (Blur) */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px); /* Efecto cristalino elegante */
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 2000; /* Asegura que esté por encima del navbar */
-  backdrop-filter: blur(5px); /* Efecto moderno de desenfoque de fondo */
+  z-index: 99999;
+  padding: 20px; /* Margen de seguridad para celulares */
+  animation: fadeIn 0.3s ease-out;
 }
 
+/* Tarjeta del formulario (Card) */
 .modal-content {
-  background-color: var(--bg-main);
-  padding: 2.5rem;
-  border-radius: 16px;
-  width: 90%;
-  max-width: 400px; /* Responsivo: en PC será de 400px, en móvil será del 90% */
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 420px; /* Ancho máximo en PC */
+  border-radius: 24px; /* Bordes redondeados modernos */
+  padding: 40px;
   position: relative;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  animation: modalFadeIn 0.3s ease-out forwards;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
 }
 
-@keyframes modalFadeIn {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
+/* Botón de cerrar (X) */
 .modal-close {
   position: absolute;
-  top: 15px;
-  right: 15px;
-  background: none;
+  top: 20px;
+  right: 20px;
+  background: #f5f5f5;
   border: none;
-  font-size: 1.5rem;
+  font-size: 24px;
+  color: #666;
   cursor: pointer;
-  color: var(--text-muted);
-  transition: color 0.3s;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
 }
 
 .modal-close:hover {
-  color: var(--text-main);
+  background-color: #e0e0e0;
+  color: #000;
+  transform: rotate(90deg); /* Animación de rotación al pasar el mouse */
 }
 
+/* Título ("Crea tu Cuenta" / "Bienvenido") */
 .modal-title {
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
   text-align: center;
-  color: var(--text-main);
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #000000;
+  margin-top: 0;
+  margin-bottom: 30px;
 }
 
+/* Agrupación de inputs y etiquetas */
 .form-group {
-  margin-bottom: 1.2rem;
-  text-align: left;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left; /* Asegura alineación correcta */
 }
 
 .form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  font-size: 0.9rem;
-  color: var(--text-main);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333333;
 }
 
+/* Campos de texto (Inputs) */
 .form-input {
   width: 100%;
-  padding: 0.8rem 1rem;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  font-family: var(--font-family);
+  padding: 14px 16px;
   font-size: 1rem;
-  outline: none;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 12px;
+  background-color: #fafafa;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  box-sizing: border-box; /* Evita que el input se salga de la tarjeta */
 }
 
 .form-input:focus {
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+  outline: none;
+  border-color: #000000;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05); /* Anillo de foco sutil */
 }
 
+/* Botón principal (Registrarme / Ingresar) */
 .btn-submit {
   width: 100%;
-  margin-top: 1rem;
+  padding: 16px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: #000000;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+  font-family: var(--font-family);
 }
 
+.btn-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn-submit:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Texto de cambio (¿Ya tienes cuenta? Inicia Sesión) */
 .auth-switch {
-  margin-top: 1.5rem;
   text-align: center;
-  font-size: 0.9rem;
-  color: var(--text-muted);
+  margin-top: 25px;
+  font-size: 0.95rem;
+  color: #666666;
 }
 
 .auth-switch button {
   background: none;
   border: none;
-  color: var(--accent-color);
-  font-weight: 600;
-  font-family: var(--font-family);
+  color: #000000;
+  font-weight: 700;
+  font-size: 0.95rem;
   cursor: pointer;
   text-decoration: underline;
-  margin-left: 5px;
+  padding: 0 5px;
+  transition: color 0.2s ease;
+  font-family: var(--font-family);
 }
 
+.auth-switch button:hover {
+  color: #555555;
+}
+
+/* Mensajes de Alerta */
 .alert-message {
   padding: 0.8rem;
   border-radius: 8px;
@@ -767,7 +748,7 @@
   border: 1px solid #86EFAC;
 }
 
-/* Modificación para el botón de logout */
+/* Botón de Logout */
 .btn-logout {
   background-color: #F3F4F6;
   color: var(--text-main);
@@ -777,15 +758,31 @@
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.3s;
+  font-family: var(--font-family);
 }
 
 .btn-logout:hover {
   background-color: #E5E7EB;
 }
 
+/* --- ANIMACIONES MODALES --- */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* =========================================
+   COMENTARIOS / VALORACIONES
+   ========================================= */
+
 .floating-btn-comments {
   position: fixed;
-  bottom: 40px;
+  bottom: 35px;
   right: 40px;
   background-color: #000000;
   color: #FFFFFF;
@@ -813,7 +810,7 @@
 .comments-modal-content {
   background-color: #FFFFFF;
   padding: 2.5rem;
-  border-radius: 24px; /* Bordes más redondeados y modernos */
+  border-radius: 24px; 
   width: 90%;
   max-width: 650px;
   max-height: 85vh;
@@ -821,7 +818,7 @@
   flex-direction: column;
   position: relative;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  animation: modalFadeIn 0.3s ease-out forwards;
+  animation: fadeIn 0.3s ease-out forwards;
 }
 
 .modal-header-comments {
@@ -844,14 +841,14 @@
   padding-right: 10px;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem; /* Separación entre tarjetas */
+  gap: 1.5rem; 
 }
 
 .comments-list::-webkit-scrollbar { width: 6px; }
 .comments-list::-webkit-scrollbar-thumb { background-color: #D1D5DB; border-radius: 10px; }
 
 .comment-item {
-  background-color: #F9FAFB; /* Fondo gris muy sutil para la tarjeta */
+  background-color: #F9FAFB; 
   border: 1px solid #E5E7EB;
   border-radius: 16px;
   padding: 1.5rem;
@@ -876,7 +873,6 @@
   gap: 12px;
 }
 
-/* Avatar circular con la inicial */
 .comment-avatar {
   width: 42px;
   height: 42px;
@@ -914,7 +910,7 @@
 }
 
 .comment-stars .filled {
-  color: #F59E0B; /* Toque de color ámbar solo para las estrellas, o #000 si prefieres negro */
+  color: #F59E0B; 
 }
 
 .comment-text {
@@ -924,7 +920,7 @@
   margin: 0;
 }
 
-/* Área de escritura de valoración (Usuarios logueados) */
+/* Área de escritura de valoración */
 .comment-input-area {
   display: flex;
   flex-direction: column;
@@ -980,6 +976,7 @@
   height: 100px;
   outline: none;
   transition: all 0.3s;
+  box-sizing: border-box;
 }
 
 .comment-textarea:focus { 
@@ -987,7 +984,6 @@
   background-color: #FFFFFF;
 }
 
-/* Bloque para invitar a usuarios NO registrados */
 .login-prompt-area {
   background-color: #F9FAFB;
   border: 1px dashed #D1D5DB;
@@ -1024,3 +1020,47 @@
 }
 
 .empty-comments { text-align: center; color: #9CA3AF; font-style: italic; margin: 3rem 0; }
+
+/* --- RESPONSIVIDAD GENERAL MÓVILES --- */
+@media (max-width: 1024px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .hero h1 { font-size: 3.5rem; }
+  .feature-row, .feature-row.reverse {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hero h1 { font-size: 2.5rem; }
+  .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr; text-align: center; }
+  .app-buttons { justify-content: center; }
+  .stats-container { grid-template-columns: repeat(2, 1fr); display: grid; }
+  .btn-descargar {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Responsividad Modales */
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 30px 20px; 
+    border-radius: 20px;
+  }
+  .modal-title {
+    font-size: 1.5rem; 
+    margin-bottom: 20px;
+  }
+  .form-input {
+    padding: 12px 14px;
+    font-size: 0.95rem;
+  }
+  .btn-submit {
+    padding: 14px;
+    font-size: 1rem;
+  }
+}

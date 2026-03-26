@@ -448,7 +448,7 @@ const Home: React.FC = () => {
         <div className="nav-links">
           <Link to="/">Principal</Link>
           <Link to="/nosotros">Nosotros</Link>
-          <Link to="/servicios">Servicios</Link>
+          <Link to="/servicios">Nuestra App</Link>
           <Link to="/contacto">Contacto</Link>
         </div>
         <div className="nav-buttons">

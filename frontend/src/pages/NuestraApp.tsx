@@ -1,7 +1,7 @@
-// frontend/src/pages/Servicios.tsx
+// frontend/src/pages/NuestraApp.tsx
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './Servicios.css';
+import './NuestraApp.css';
 import './Home.css'; // Hereda estilos del Navbar y Modales
 
 import logoFactoriz from '../assets/logo.png';
@@ -11,14 +11,15 @@ import mackgeolocalizacion from '../assets/mackubica.png';
 import mackfacial from '../assets/mackfacial.png';
 import mackdashboard from '../assets/mackdash.png';
 import interaccion from '../assets/interaccion.jpg';
-const Servicios: React.FC = () => {
+
+const NuestraApp: React.FC = () => {
   // --- ESTADOS PARA MODALES ---
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState({ type: '', text: '' }); 
+  const [message, setMessage] = useState({ type: '', text: '' });
   const [isLoading, setIsLoading] = useState(false);
 
   const [currentUser, setCurrentUser] = useState<string | null>(null);
@@ -93,7 +94,7 @@ const Servicios: React.FC = () => {
 
       localStorage.setItem('token', data.token);
       localStorage.setItem('username', data.username);
-      
+
       setCurrentUser(data.username);
       closeAllModals();
     } catch (err: unknown) {
@@ -181,20 +182,14 @@ const Servicios: React.FC = () => {
         <div className="nav-links">
           <Link to="/">Principal</Link>
           <Link to="/nosotros">Nosotros</Link>
-          <Link to="/servicios">Servicios</Link>
+          <Link to="/servicios">Nuestra App</Link>
           <Link to="/contacto">Contacto</Link>
         </div>
         <div className="nav-buttons">
           {currentUser ? (
-            <>
-              <span style={{ fontWeight: 600, marginRight: '10px', color: '#000' }}>Hola, {currentUser}</span>
-              <button onClick={handleLogout} className="btn-logout">Salir</button>
-            </>
+            <><span style={{ fontWeight: 600, marginRight: '10px', color: '#000' }}>Hola, {currentUser}</span><button onClick={handleLogout} className="btn-logout">Salir</button></>
           ) : (
-            <>
-              <button onClick={() => setIsLoginOpen(true)} className="btn-login">Iniciar Sesión</button>
-              <button onClick={() => setIsRegisterOpen(true)} className="btn-register">Registrarme</button>
-            </>
+            <><button onClick={() => setIsLoginOpen(true)} className="btn-login">Iniciar Sesión</button><button onClick={() => setIsRegisterOpen(true)} className="btn-register">Registrarme</button></>
           )}
         </div>
       </nav>
@@ -206,7 +201,7 @@ const Servicios: React.FC = () => {
           <span className="tag">Innovación</span>
           <span className="tag">Aplicaciones</span>
         </div>
-        <h1>Nuestros Servicios</h1>
+        <h1>Nuestra App</h1>
         <p>
           Soluciones digitales para el sector de la belleza. Ofrecemos herramientas tecnológicas diseñadas para optimizar la gestión de servicios en salones de belleza, peluquerías unisex y barberías, mejorando la organización interna y la experiencia de los clientes a través de una plataforma moderna e intuitiva.
         </p>
@@ -214,7 +209,7 @@ const Servicios: React.FC = () => {
 
       {/* --- CONTENIDO PRINCIPAL --- */}
       <main className="servicios-content">
-        
+
         {/* SERVICIO 1 */}
         <section className="servicio-row">
           <div className="servicio-text">
@@ -328,4 +323,4 @@ const Servicios: React.FC = () => {
   );
 };
 
-export default Servicios;
+export default NuestraApp;

@@ -1,19 +1,22 @@
 // frontend/src/components/Navbar.tsx
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X } from 'lucide-react'; // Iconos para el menú móvil
-import logoFactoriz from '../assets/logo.png'; // Importamos el logo real
-import './Navbar.css'; // <-- IMPORTAMOS EL NUEVO CSS
+import { Menu, X, Download } from 'lucide-react'; // Importamos el ícono de descarga
+import logoFactoriz from '../assets/logo.png';
+import './Navbar.css';
 
 const Navbar = () => {
-  // Estado para controlar el menú móvil
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // NOTA: Si vas a usar este componente globalmente, puedes pasar 
+  // currentUser, handleLogout, setIsLoginOpen, etc., como props o contexto.
+  // Por ahora dejamos la estructura visual lista.
 
   return (
     <header className="navbar-header">
-      <div className="container navbar-container">
+      <div className="navbar-container">
         
-        {/* LOGO CORREGIDO (Imagen grande y responsiva) */}
+        {/* LOGO */}
         <Link to="/" className="navbar-logo-container">
           <img 
             src={logoFactoriz} 
@@ -24,45 +27,47 @@ const Navbar = () => {
 
         {/* MENÚ CENTRAL (Escritorio) */}
         <nav className="navbar-menu-escritorio">
-          {['Principal', 'Nosotros', 'Servicios', 'Contacto'].map(item => (
-            <Link 
-              key={item} 
-              to={`/${item.toLowerCase() === 'principal' ? '' : item.toLowerCase()}`} 
-              className="navbar-menu-link"
-            >
-              {item}
-            </Link>
-          ))}
+          <Link to="/" className="navbar-menu-link">Inicio</Link>
+          <Link to="/nosotros" className="navbar-menu-link">Nosotros</Link>
+          <Link to="/nuestra-app" className="navbar-menu-link">Nuestra App</Link>
+          <Link to="/informacion" className="navbar-menu-link">Información</Link>
+          <Link to="/contacto" className="navbar-menu-link">Contacto</Link>
         </nav>
 
         {/* BOTONES DERECHA (Escritorio) */}
         <div className="navbar-botones-escritorio">
-          <button className="btn btn-outline-dark">Regístrate</button>
-          <button className="btn btn-filled-primary">Ingresar</button>
+          {/* Botón Descargar App siempre visible */}
+          <a href="#" className="btn-descargar-nav">
+            <Download size={16} />
+            Descargar App
+          </a>
+          
+          <button className="btn-login-nav">Iniciar Sesión</button>
+          <button className="btn-register-nav">Registrarme</button>
         </div>
 
-        {/* BOTÓN HAMBURGUESA (Móvil) - Ahora funcional */}
+        {/* BOTÓN HAMBURGUESA (Móvil) */}
         <button className="navbar-mobile-menu-btn" onClick={() => setIsMenuOpen(!isMenuOpen)}>
           {isMenuOpen ? <X size={32} /> : <Menu size={32} />}
         </button>
       </div>
 
-      {/* MENÚ DESPLEGABLE (Móvil) - Ahora responsivo */}
+      {/* MENÚ DESPLEGABLE (Móvil) */}
       {isMenuOpen && (
         <div className="navbar-mobile-menu-dropdown">
-          {['Principal', 'Nosotros', 'Servicios', 'Contacto'].map(item => (
-            <Link 
-              key={item} 
-              to={`/${item.toLowerCase() === 'principal' ? '' : item.toLowerCase()}`} 
-              className="navbar-mobile-link"
-              onClick={() => setIsMenuOpen(false)} // Cierra el menú al hacer click
-            >
-              {item}
-            </Link>
-          ))}
+          <Link to="/" className="navbar-mobile-link" onClick={() => setIsMenuOpen(false)}>Inicio</Link>
+          <Link to="/nosotros" className="navbar-mobile-link" onClick={() => setIsMenuOpen(false)}>Nosotros</Link>
+          <Link to="/nuestra-app" className="navbar-mobile-link" onClick={() => setIsMenuOpen(false)}>Nuestra App</Link>
+          <Link to="/informacion" className="navbar-mobile-link" onClick={() => setIsMenuOpen(false)}>Información</Link>
+          <Link to="/contacto" className="navbar-mobile-link" onClick={() => setIsMenuOpen(false)}>Contacto</Link>
+          
           <div className="navbar-mobile-buttons-container">
-            <button className="btn btn-outline-dark" style={{ width: '100%' }}>Regístrate</button>
-            <button className="btn btn-filled-primary" style={{ width: '100%' }}>Ingresar</button>
+            <a href="#" className="btn-descargar-nav mobile-btn" onClick={() => setIsMenuOpen(false)}>
+              <Download size={16} />
+              Descargar App
+            </a>
+            <button className="btn-login-nav mobile-btn" onClick={() => setIsMenuOpen(false)}>Iniciar Sesión</button>
+            <button className="btn-register-nav mobile-btn" onClick={() => setIsMenuOpen(false)}>Registrarme</button>
           </div>
         </div>
       )}

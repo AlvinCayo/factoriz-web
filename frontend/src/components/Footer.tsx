@@ -58,7 +58,7 @@ const Footer: React.FC = () => {
             <ul className="footer-links">
               <li><Link to="/" onClick={scrollToTop}>Principal</Link></li>
               <li><Link to="/nosotros" onClick={scrollToTop}>Nosotros</Link></li>
-              <li><Link to="/servicios" onClick={scrollToTop}>Servicios</Link></li>
+              <li><Link to="/servicios" onClick={scrollToTop}>Nuestra App</Link></li>
               <li><Link to="/contacto" onClick={scrollToTop}>Contacto</Link></li>
             </ul>
           </div>
