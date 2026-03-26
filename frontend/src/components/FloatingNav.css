@@ -1,0 +1,93 @@
+/* frontend/src/components/FloatingNav.css */
+.floating-nav-container {
+  position: fixed;
+  bottom: 30px;
+  left: 30px; /* ¡Movido a la izquierda! */
+  z-index: 9999; 
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Alineado a la izquierda */
+  gap: 15px;
+}
+
+/* El menú desplegable */
+.floating-nav-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Alineado a la izquierda */
+  gap: 12px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floating-nav-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Cada botón/enlace del menú */
+.floating-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #FFFFFF;
+  color: #000000;
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  font-family: var(--fuente-principal, sans-serif);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  border: 1px solid #EEEEEE;
+}
+
+.floating-nav-item:hover {
+  background-color: #000000;
+  color: #FFFFFF;
+  transform: scale(1.05);
+  border-color: #000000;
+}
+
+/* El botón principal que activa el menú */
+.floating-nav-main-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #000000; 
+  color: #FFFFFF;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.floating-nav-main-btn:hover {
+  transform: scale(1.1);
+  background-color: #222222;
+}
+
+/* Responsividad para móviles */
+@media (max-width: 768px) {
+  .floating-nav-container {
+    bottom: 20px;
+    left: 20px; /* ¡Movido a la izquierda en móviles! */
+  }
+  
+  .floating-nav-main-btn {
+    width: 55px;
+    height: 55px;
+  }
+
+  .floating-nav-item {
+    padding: 8px 15px;
+    font-size: 0.85rem;
+  }
+}
