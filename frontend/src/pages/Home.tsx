@@ -5,7 +5,6 @@ import { MessageSquare, Star } from "lucide-react";
 import "./Home.css";
 
 import logoFactoriz from "../assets/logo.png";
-//import fondoHero from '../assets/fondo.png';
 import Footer from "../components/Footer";
 import Fonthero from "../assets/Heropro.jpg";
 import Peluqueri from "../assets/peluqueria.jpg";
@@ -216,7 +215,6 @@ const Home: React.FC = () => {
     );
   };
 
-  // Extrae la primera letra del nombre de usuario para el avatar
   const getInitial = (name: string) => {
     return name ? name.charAt(0).toUpperCase() : "U";
   };
@@ -228,7 +226,9 @@ const Home: React.FC = () => {
         className="floating-btn-comments"
         onClick={() => setIsFeedbacksOpen(true)}
       >
-        <MessageSquare size={20} /> Valoraciones
+        <MessageSquare size={20} />
+        {/* Aquí está la magia: envolvemos el texto en un span */}
+        <span className="texto-valoraciones">Valoraciones</span>
       </button>
 
       {/* --- MODAL DE VALORACIONES --- */}
@@ -495,7 +495,7 @@ const Home: React.FC = () => {
             El equipo detrás de aplicaciones profesionales. Desarrollamos
             aplicaciones y plataformas que combinan tecnología, innovación y
             experiencia de usuario para mejorar la forma en que las personas
-            acceden a servicios y herramientas digitales.
+            aceden a servicios y herramientas digitales.
           </p>
           <button className="btn-main">SABER MAS</button>
         </div>

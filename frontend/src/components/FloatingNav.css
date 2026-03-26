@@ -77,13 +77,13 @@
 /* Responsividad para móviles */
 @media (max-width: 768px) {
   .floating-nav-container {
-    bottom: 20px;
+    bottom: 80px;
     left: 20px; /* ¡Movido a la izquierda en móviles! */
   }
   
   .floating-nav-main-btn {
-    width: 55px;
-    height: 55px;
+    width: 50px;
+    height: 50px;
   }
 
   .floating-nav-item {

@@ -65,7 +65,7 @@
    ========================================= */
 @media (max-width: 768px) {
   .floating-download-container {
-    bottom: 100px; /* Un poco más abajo para móviles */
+    bottom: 20px; /* Un poco más abajo para móviles */
     left: 20px; /* Menos margen lateral */
   }
   

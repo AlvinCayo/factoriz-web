@@ -1043,6 +1043,26 @@
     padding: 6px 12px;
     font-size: 0.8rem;
   }
+  /* --- NUEVO: Ajuste del botón Valoraciones para Móvil --- */
+  .floating-btn-comments {
+    bottom: 20px;
+    right: 20px;
+    padding: 14px; /* Relleno uniforme para hacerlo cuadrado/circular */
+    border-radius: 50%; /* Lo convierte en un círculo perfecto */
+    gap: 0; /* Quitamos la separación porque ya no hay texto */
+  }
+
+  /* Ocultamos la palabra "Valoraciones" */
+  .floating-btn-comments .texto-valoraciones {
+    display: none; 
+  }
+
+  /* Ajustamos el tamaño del ícono para que quede centrado */
+  .floating-btn-comments svg {
+    width: 20px;
+    height: 20px;
+    margin: 0; /* Asegura que esté perfectamente en el centro */
+  }
 }
 
 /* Responsividad Modales */

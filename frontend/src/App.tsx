@@ -18,8 +18,8 @@ function App() {
         <Route path="/contacto" element={<Contacto />} />
         <Route path="/informacion" element={<Informacion />} /> {/* REGISTRA ESTA RUTA */}
       </Routes>
-      <FloatingDownload />
       <FloatingNav />
+      <FloatingDownload />
     </Router>
   );
 }
