@@ -6,6 +6,9 @@
   padding: 4rem 5% 2rem;
   font-family: var(--font-family, 'Poppins', sans-serif);
   border-top: 4px solid var(--color-primario, #D4AF37); /* Línea dorada superior */
+  
+  /* --- LA SOLUCIÓN MÁGICA PARA EL FOOTER --- */
+  scroll-snap-align: end; 
 }
 
 .footer-grid {

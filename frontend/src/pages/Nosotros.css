@@ -1,17 +1,30 @@
 /* frontend/src/pages/Nosotros.css */
 
+/* --- MAGIA DEL SCROLL PARA NOSOTROS --- */
 .nosotros-container {
-  font-family: 'Poppins', sans-serif;
-  color: #111827;
-  background-color: #FFFFFF; /* Fondo blanco puro */
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y proximity; /* El imán suave */
+  scroll-behavior: smooth;
+  background-color: var(--bg-main, #FFFFFF);
   overflow-x: hidden;
 }
 
-/* --- HERO SECTION --- */
+/* Ocultar barra de scroll para que se vea limpio */
+.nosotros-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* --- HERO SECTION (Ajustado para ocupar 1 pantalla y el imán) --- */
 .nosotros-hero {
-  padding: 5rem 5% 2rem;
-  text-align: left; /* Alineado a la izquierda según el diseño */
+  min-height: 100vh; /* Ocupa 1 pantalla exacta */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra el título verticalmente */
+  align-items: flex-start; /* Alineado a la izquierda según tu diseño */
+  padding: 130px 5% 60px; /* 130px arriba para que el navbar no lo tape */
   background-color: #F2E9E2;
+  scroll-snap-align: start; /* Aquí se pega el imán */
 }
 
 .hero-tags {
@@ -39,18 +52,20 @@
 
 /* --- CONTENIDO PRINCIPAL --- */
 .nosotros-content {
-  padding: 2rem 5% 8rem;
-  display: flex;
-  flex-direction: column;
-  gap: 5rem; /* Espacio MUY amplio entre secciones para respirar */
+  /* Quitamos los gaps y paddings de aquí, ya que cada fila se espaciará sola ocupando 1 pantalla */
+  display: block; 
 }
 
-/* FILAS INTERCALADAS (TEXTO E IMAGEN) */
+/* --- FILAS INTERCALADAS (TEXTO E IMAGEN) --- */
 .info-row {
+  min-height: 100vh; /* Cada bloque ocupa 1 pantalla exacta */
   display: flex;
-  align-items: center;
-  gap: 6rem; /* Espacio grande entre el texto y la imagen */
+  align-items: center; /* Centra el contenido verticalmente */
+  justify-content: space-between;
+  gap: 6rem; /* Tu espacio grande entre el texto y la imagen */
+  padding: 130px 5% 60px; /* 130px de espacio para que el menú no lo tape */
   position: relative;
+  scroll-snap-align: start; /* Aquí se pega el imán */
 }
 
 /* Invierte el orden para que la imagen quede a la izquierda */
@@ -65,7 +80,8 @@
   font-weight: 900;
   color: #F9FAFB; /* Gris ultra claro, casi invisible */
   z-index: 0;
-  top: -3rem;
+  top: 50%; /* Centrado verticalmente */
+  transform: translateY(-50%);
   left: 0;
   letter-spacing: 5px;
   user-select: none;
@@ -86,7 +102,7 @@
 .info-text h2 {
   font-size: 2.5rem;
   font-weight: 800;
-  color: #733d3d; /* Negro puro */
+  color: #733d3d; /* Tu color burdeos/negro */
   margin-bottom: 1.5rem;
   line-height: 1.2;
 }
@@ -109,7 +125,7 @@
 
 .info-image {
   width: 100%;
-  max-width: 300px; /* Imagen grande */
+  max-width: 400px; /* Un poco más grande para aprovechar la pantalla */
   height: auto;
   border-radius: 30px; /* Bordes bien redondeados */
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06); /* Sombra amplia y suave */
@@ -135,18 +151,13 @@
 }
 
 @media (max-width: 768px) {
-  .nosotros-hero {
-    padding: 3rem 5% 1rem;
-  }
   .nosotros-hero h1 {
     font-size: 3rem;
-  }
-  .nosotros-content {
-    gap: 5rem;
   }
   .info-row, .info-row.reverse {
     flex-direction: column; /* En celular se apilan */
     text-align: center;
+    padding-top: 100px;
   }
   .watermark {
     display: none; /* Ocultamos la marca de agua en móviles por espacio */

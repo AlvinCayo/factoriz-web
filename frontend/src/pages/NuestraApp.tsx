@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './NuestraApp.css';
-import './Home.css'; // Hereda estilos del Navbar y Modales
+import './Home.css'; 
 
 import logoFactoriz from '../assets/logo.png';
 import Footer from '../components/Footer';
@@ -111,6 +111,15 @@ const NuestraApp: React.FC = () => {
     setCurrentUser(null);
   };
 
+  // Función para desplazamiento suave a los enlaces internos
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="servicios-container">
       {/* --- MODALES --- */}
@@ -197,21 +206,35 @@ const NuestraApp: React.FC = () => {
       {/* --- HERO SECTION SERVICIOS --- */}
       <header className="servicios-hero">
         <div className="hero-tags">
-          <span className="tag">Belleza</span>
-          <span className="tag">Innovación</span>
-          <span className="tag">Aplicaciones</span>
+          {/* Etiquetas convertidas en enlaces ancla (Anchor Links) */}
+          <a href="#belleza" className="tag interactive-tag" onClick={(e) => scrollToSection(e, 'belleza')}>Belleza</a>
+          <a href="#innovacion" className="tag interactive-tag" onClick={(e) => scrollToSection(e, 'innovacion')}>Innovación</a>
+          <a href="#aplicaciones" className="tag interactive-tag" onClick={(e) => scrollToSection(e, 'aplicaciones')}>Servicios</a>
         </div>
         <h1>Nuestra App</h1>
         <p>
-          Soluciones digitales para el sector de la belleza. Ofrecemos herramientas tecnológicas diseñadas para optimizar la gestión de servicios en salones de belleza, peluquerías unisex y barberías, mejorando la organización interna y la experiencia de los clientes a través de una plataforma moderna e intuitiva.
+          {/* Texto mucho más concreto y al grano */}
+          Herramientas tecnológicas para salones, peluquerías y barberías. 
+          Optimiza la gestión de tu negocio y mejora la experiencia de tus clientes 
+          a través de nuestra plataforma moderna e intuitiva.
         </p>
       </header>
 
       {/* --- CONTENIDO PRINCIPAL --- */}
       <main className="servicios-content">
 
-        {/* SERVICIO 1 */}
-        <section className="servicio-row">
+        {/* --- NUEVO SUBTÍTULO: LO QUE TE OFRECEMOS --- */}
+        <section className="oferta-header-section" id="aplicaciones">
+          <div className="oferta-header-content">
+            <span className="oferta-badge">Características</span>
+            <h2>Lo que te ofrecemos</h2>
+            <p>Descubre todo lo que nuestra plataforma puede hacer por tu negocio y tus clientes.</p>
+            <div className="oferta-line"></div>
+          </div>
+        </section>
+
+        {/* SERVICIO 1 (Anclado a "Belleza") */}
+        <section className="servicio-row" id="innovacion">
           <div className="servicio-text">
             <h2>Gestión de reservas digitales</h2>
             <p>
@@ -252,8 +275,8 @@ const NuestraApp: React.FC = () => {
           </div>
         </section>
 
-        {/* SERVICIO 3 */}
-        <section className="servicio-row">
+        {/* SERVICIO 3 (Anclado a "Innovación") */}
+        <section className="servicio-row" id="belleza">
           <div className="servicio-text">
             <h2>Análisis facial inteligente</h2>
             <p>

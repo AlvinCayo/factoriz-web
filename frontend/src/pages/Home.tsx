@@ -1,7 +1,7 @@
 // frontend/src/pages/Home.tsx
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { MessageSquare, Star } from "lucide-react";
+import { ChevronLeft, ChevronRight, MessageSquare, Star } from "lucide-react";
 import "./Home.css";
 
 import logoFactoriz from "../assets/logo.png";
@@ -15,6 +15,7 @@ import mackubica from "../assets/mackubica.png";
 import ubicacion from "../assets/Ubicacion.jpg";
 import Calendario from "../assets/calendario.jpg";
 import Ia from "../assets/IA.jpg";
+
 
 interface Feedback {
   id: number;
@@ -42,6 +43,8 @@ const Home: React.FC = () => {
   const [newRating, setNewRating] = useState(5);
   const [isPostingFeedback, setIsPostingFeedback] = useState(false);
 
+  const sliderRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const savedUser = localStorage.getItem("username");
     if (savedUser) {
@@ -60,6 +63,19 @@ const Home: React.FC = () => {
     setIsRegisterOpen(false);
     setIsFeedbacksOpen(false);
     resetForm();
+  };
+
+  // 3. --- AGREGA ESTAS FUNCIONES PARA CONTROLAR EL DESLIZAMIENTO ---
+  const scrollLeft = () => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollBy({ left: -window.innerWidth, behavior: "smooth" });
+    }
+  };
+
+  const scrollRight = () => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollBy({ left: window.innerWidth, behavior: "smooth" });
+    }
   };
 
   const switchModal = (to: "login" | "register") => {
@@ -540,55 +556,92 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* QUÉ OFRECE LA EMPRESA Y FEATURES */}
+      {/* --- QUÉ OFRECE LA EMPRESA (REDiseño Premium Horizontal) --- */}
       <section className="section" id="servicios">
-        <h2 className="section-title">¿Qué ofrece la empresa?</h2>
-        <p className="section-subtitle" style={{ marginBottom: "6rem" }}>
-          Soluciones digitales para el sector estético. Nuestra empresa
-          desarrolla herramientas tecnológicas que ayudan a los negocios del
-          sector de la belleza a mejorar su organización, atraer nuevos clientes
-          y ofrecer una experiencia moderna.
-        </p>
-
-        <div className="feature-row">
-          <div className="feature-text">
-            <h2>
-              Aumenta la visibilidad de tu negocio y atrae a nuevos clientes
-            </h2>
-            <p>
-              La mayoría de las personas buscan servicios de belleza por
-              internet. Con nuestra plataforma, tu negocio estará visible para
-              cientos de usuarios que buscan un servicio como el tuyo.
+        
+        {/* Unifica el header dentro de un contenedor para mejor diseño */}
+        <div className="servicios-frame">
+          <div className="servicios-header">
+            <h2 className="section-title">¿Qué ofrece la empresa?</h2>
+            <p className="section-subtitle">
+              Soluciones digitales para el sector estético. Desarrollamos
+              herramientas tecnológicas que modernizan la gestión, atraen
+              clientes y optimizan tu negocio.
             </p>
           </div>
-          <div className="feature-image-wrapper">
-            <img
-              src={mackubica}
-              alt="Mockup App Visibilidad"
-              className="feature-mockup"
-            />
-          </div>
-        </div>
 
-        <div className="feature-row reverse">
-          <div className="feature-text">
-            <h2>
-              Aumenta el número de reservas y simplifica la gestión de tus citas
-            </h2>
-            <p>
-              Olvídate de las llamadas perdidas y los mensajes sin responder.
-              Con nuestra plataforma, tus clientes pueden reservar citas las 24
-              horas del día, los 7 días de la semana, desde cualquier
-              dispositivo.
-            </p>
+          {/* --- CONTENEDOR PRINCIPAL DEL SLIDER CON BOTONES --- */}
+          <div className="horizontal-slider-wrapper">
+            
+            {/* Botón Izquierdo (ChevronLeft) */}
+            <button className="slider-nav-btn left" onClick={scrollLeft}>
+              <ChevronLeft size={30} />
+            </button>
+
+            {/* El slider en sí (con la referencia 'ref') */}
+            <div className="horizontal-slider" ref={sliderRef}>
+              
+              {/* Primer Celular (Feature 1) */}
+              <div className="horizontal-slide">
+                <div className="feature-card">
+                  <div className="feature-text">
+                    <h2>
+                      Aumenta la visibilidad y atrae nuevos clientes
+                    </h2>
+                    <p>
+                      Moderniza tu presencia digital. Con nuestra plataforma, tu negocio estará visible para
+                      cientos de usuarios que buscan servicios de belleza y estética profesional como el tuyo.
+                    </p>
+                    <button className="btn-main small">SABER MÁS</button>
+                  </div>
+                  <div className="feature-image-wrapper">
+                    <img
+                      src={mackubica}
+                      alt="Mockup App Visibilidad"
+                      className="feature-mockup"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Segundo Celular (Feature 2) */}
+              <div className="horizontal-slide">
+                <div className="feature-card">
+                  <div className="feature-text">
+                    <h2>
+                      Simplifica tus reservas y optimiza la gestión
+                    </h2>
+                    <p>
+                      Olvídate de las llamadas perdidas y los mensajes sin responder.
+                      Tus clientes pueden reservar citas las 24/7 desde cualquier
+                      dispositivo de forma instantánea.
+                    </p>
+                    <button className="btn-main small">SABER MÁS</button>
+                  </div>
+                  <div className="feature-image-wrapper">
+                    <img
+                      src={mackreserva}
+                      alt="Mockup App Reservas"
+                      className="feature-mockup"
+                    />
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+
+            {/* Botón Derecho (ChevronRight) */}
+            <button className="slider-nav-btn right" onClick={scrollRight}>
+              <ChevronRight size={30} />
+            </button>
           </div>
-          <div className="feature-image-wrapper">
-            <img
-              src={mackreserva}
-              alt="Mockup App Reservas"
-              className="feature-mockup"
-            />
+
+          {/* Puntos de paginación (Visuales) */}
+          <div className="pagination-dots">
+            <span className="dot active"></span>
+            <span className="dot"></span>
           </div>
+          
         </div>
       </section>
 

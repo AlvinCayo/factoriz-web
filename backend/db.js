@@ -1,19 +1,18 @@
-// backend/db.js
 const { Pool } = require('pg');
 require('dotenv').config();
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  // Si Neon DB te exige SSL, asegúrate de tener esto activado:
   ssl: {
     rejectUnauthorized: false
-  }
+  },
+  max: 10,
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 2000,
 });
 
-// --- ESTA ES LA LÍNEA MÁGICA QUE EVITA EL CRASH ---
-pool.on('error', (err, client) => {
-  console.error('⚠️ Error inesperado en un cliente inactivo de la base de datos:', err.message);
-  // Node.js registrará el error en la consola, pero ya NO apagará el servidor.
+pool.on('error', (err) => {
+  console.error('Error inesperado en el pool de la base de datos', err);
 });
 
 module.exports = pool;
