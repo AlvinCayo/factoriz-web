@@ -1,4 +1,4 @@
-const client = require('../config/db');
+const client = require('../db');
 
 async function registerClient(req, res) {
   const { email, password, firstName, lastName, birthDate, gender, phone } = req.body;

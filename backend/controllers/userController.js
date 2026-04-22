@@ -1,4 +1,4 @@
-const client = require('../config/db');
+const client = require('../db');
 
 async function logUserActivity(userId, action) {
   const queryText = 'INSERT INTO activity_logs (user_id, action) VALUES ($1, $2)';

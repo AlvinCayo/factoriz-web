@@ -1,4 +1,4 @@
-const client = require('../config/db');
+const client = require('../db');
 
 async function getSystemUsers(req, res) {
   const queryText = 'SELECT u.id, u.email, u.role, u.is_active, COALESCE(c.first_name, b.representative_name) AS first_name, COALESCE(c.last_name, b.representative_last_name) AS last_name, COALESCE(c.phone, b.phone) AS phone, COALESCE(c.profile_picture, b.profile_picture) AS profile_picture, b.license_pdf_url, b.is_approved FROM users u LEFT JOIN client_profiles c ON u.id = c.user_id LEFT JOIN business_profiles b ON u.id = b.user_id';
