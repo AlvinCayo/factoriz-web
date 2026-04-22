@@ -6,7 +6,7 @@ const FloatingDownload = () => {
   return (
     <div className="floating-download-container">
       <a 
-        href="#" // En el futuro pondrás el link real a Play Store / App Store
+        href="https://expo.dev/artifacts/eas/5x1fTrkTipGTqhorSTsfmr.apk" // En el futuro pondrás el link real a Play Store / App Store
         className="floating-download-btn" 
         aria-label="Descargar Aplicación Factoriz"
       >
