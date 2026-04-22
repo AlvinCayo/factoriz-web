@@ -1,6 +1,6 @@
 // frontend/src/pages/Home.tsx
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // <-- Importamos useNavigate
 import { ChevronLeft, ChevronRight, MessageSquare, Star } from "lucide-react";
 import "./Home.css";
 
@@ -16,7 +16,6 @@ import ubicacion from "../assets/Ubicacion.jpg";
 import Calendario from "../assets/calendario.jpg";
 import Ia from "../assets/IA.jpg";
 
-
 interface Feedback {
   id: number;
   username: string;
@@ -26,15 +25,10 @@ interface Feedback {
 }
 
 const Home: React.FC = () => {
-  // --- ESTADOS PARA MODALES DE AUTH ---
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
-  const [currentUser, setCurrentUser] = useState<string | null>(null);
+  const navigate = useNavigate(); // <-- Inicializamos la navegación
 
-  const [usernameAuth, setUsernameAuth] = useState("");
-  const [passwordAuth, setPasswordAuth] = useState("");
-  const [message, setMessage] = useState({ type: "", text: "" });
-  const [isLoading, setIsLoading] = useState(false);
+  // --- ESTADO DEL USUARIO ---
+  const [currentUser, setCurrentUser] = useState<string | null>(null);
 
   // --- ESTADOS PARA VALORACIONES ---
   const [isFeedbacksOpen, setIsFeedbacksOpen] = useState(false);
@@ -45,27 +39,23 @@ const Home: React.FC = () => {
 
   const sliderRef = useRef<HTMLDivElement>(null);
 
+  // --- VERIFICAR SESIÓN ACTIVA ---
   useEffect(() => {
-    const savedUser = localStorage.getItem("username");
-    if (savedUser) {
-      setCurrentUser(savedUser);
+    // Revisamos si guardaste el ID del usuario en el login anterior
+    const savedUserId = localStorage.getItem("userId");
+    const savedRole = localStorage.getItem("userRole");
+    
+    // Si tienes un backend que te devuelve el nombre, podrías hacer un fetch aquí.
+    // Por ahora, si hay un userId, asumimos que está logueado.
+    if (savedUserId) {
+      setCurrentUser(savedRole === 'centro' ? 'Negocio' : 'Usuario'); 
     }
   }, []);
 
-  const resetForm = () => {
-    setUsernameAuth("");
-    setPasswordAuth("");
-    setMessage({ type: "", text: "" });
-  };
-
-  const closeAllModals = () => {
-    setIsLoginOpen(false);
-    setIsRegisterOpen(false);
+  const closeModals = () => {
     setIsFeedbacksOpen(false);
-    resetForm();
   };
 
-  // 3. --- AGREGA ESTAS FUNCIONES PARA CONTROLAR EL DESLIZAMIENTO ---
   const scrollLeft = () => {
     if (sliderRef.current) {
       sliderRef.current.scrollBy({ left: -window.innerWidth, behavior: "smooth" });
@@ -78,90 +68,10 @@ const Home: React.FC = () => {
     }
   };
 
-  const switchModal = (to: "login" | "register") => {
-    resetForm();
-    if (to === "login") {
-      setIsRegisterOpen(false);
-      setIsLoginOpen(true);
-    } else {
-      setIsLoginOpen(false);
-      setIsRegisterOpen(true);
-    }
-  };
-
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setMessage({ type: "", text: "" });
-
-    try {
-      const res = await fetch(
-        import.meta.env.VITE_API_URL + "/api/auth/register",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            username: usernameAuth,
-            password: passwordAuth,
-          }),
-        },
-      );
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.error || "Error al registrar");
-
-      setMessage({
-        type: "success",
-        text: "¡Cuenta creada! Ahora inicia sesión.",
-      });
-      setTimeout(() => switchModal("login"), 2000);
-    } catch (err: unknown) {
-      const errorMessage =
-        err instanceof Error ? err.message : "Error desconocido";
-      setMessage({ type: "error", text: errorMessage });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setMessage({ type: "", text: "" });
-
-    try {
-      const res = await fetch(
-        import.meta.env.VITE_API_URL + "/api/auth/login",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            username: usernameAuth,
-            password: passwordAuth,
-          }),
-        },
-      );
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.error || "Credenciales incorrectas");
-
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("username", data.username);
-
-      setCurrentUser(data.username);
-      closeAllModals();
-    } catch (err: unknown) {
-      const errorMessage =
-        err instanceof Error ? err.message : "Error desconocido";
-      setMessage({ type: "error", text: errorMessage });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userRole");
+    // Si tuvieras un token, también lo remueves aquí: localStorage.removeItem("token");
     setCurrentUser(null);
   };
 
@@ -184,12 +94,15 @@ const Home: React.FC = () => {
     if (!newFeedbackText.trim() || !currentUser) return;
     setIsPostingFeedback(true);
 
+    // Como currentUser ahora dice "Usuario" o "Negocio", podrías requerir obtener el nombre real desde tu backend o localStorage
+    const authorName = localStorage.getItem("username") || "Usuario Anónimo"; 
+
     try {
       const res = await fetch(import.meta.env.VITE_API_URL + "/api/feedbacks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          username: currentUser,
+          username: authorName,
           comment: newFeedbackText,
           rating: newRating,
         }),
@@ -237,28 +150,27 @@ const Home: React.FC = () => {
 
   return (
     <div className="home-container">
-      {/* --- BOTÓN FLOTANTE DE VALORACIONES (SIEMPRE VISIBLE) --- */}
+      {/* --- BOTÓN FLOTANTE DE VALORACIONES --- */}
       <button
         className="floating-btn-comments"
         onClick={() => setIsFeedbacksOpen(true)}
       >
         <MessageSquare size={20} />
-        {/* Aquí está la magia: envolvemos el texto en un span */}
         <span className="texto-valoraciones">Valoraciones</span>
       </button>
 
       {/* --- MODAL DE VALORACIONES --- */}
       {isFeedbacksOpen && (
-        <div className="modal-overlay" onClick={closeAllModals}>
+        <div className="modal-overlay" onClick={closeModals}>
           <div
             className="comments-modal-content"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="modal-header-comments">
-              <button className="modal-close" onClick={closeAllModals}>
+              <button className="modal-close" onClick={closeModals}>
                 &times;
               </button>
-              <h2>Comunidad Factoriz</h2>
+              <h2>Comunidad Factoriz / Aura</h2>
             </div>
 
             <div className="comments-list">
@@ -310,7 +222,7 @@ const Home: React.FC = () => {
                 </div>
                 <textarea
                   className="comment-textarea"
-                  placeholder="Escribe tu experiencia con Factoriz..."
+                  placeholder="Escribe tu experiencia..."
                   value={newFeedbackText}
                   onChange={(e) => setNewFeedbackText(e.target.value)}
                 ></textarea>
@@ -328,130 +240,15 @@ const Home: React.FC = () => {
                   ¿Tienes algo que decirnos? Inicia sesión para dejar tu
                   valoración y contarnos tu experiencia.
                 </p>
+                {/* Redirigimos al Login en lugar de abrir modal */}
                 <button
                   className="btn-login-prompt"
-                  onClick={() => switchModal("login")}
+                  onClick={() => navigate('/login')}
                 >
                   Iniciar Sesión
                 </button>
               </div>
             )}
-          </div>
-        </div>
-      )}
-
-      {/* --- MODAL REGISTRO --- */}
-      {isRegisterOpen && (
-        <div className="modal-overlay" onClick={closeAllModals}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={closeAllModals}>
-              &times;
-            </button>
-            <h2 className="modal-title">Crea tu Cuenta</h2>
-
-            {message.text && (
-              <div
-                className={`alert-message ${message.type === "error" ? "alert-error" : "alert-success"}`}
-              >
-                {message.text}
-              </div>
-            )}
-
-            <form onSubmit={handleRegister}>
-              <div className="form-group">
-                <label>Nombre de Usuario</label>
-                <input
-                  type="text"
-                  className="form-input"
-                  placeholder="Ej: alvin_admin"
-                  value={usernameAuth}
-                  onChange={(e) => setUsernameAuth(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label>Contraseña</label>
-                <input
-                  type="password"
-                  className="form-input"
-                  placeholder="Crea una contraseña segura"
-                  value={passwordAuth}
-                  onChange={(e) => setPasswordAuth(e.target.value)}
-                  required
-                />
-              </div>
-              <button
-                type="submit"
-                className="btn-main btn-submit"
-                disabled={isLoading}
-              >
-                {isLoading ? "Registrando..." : "Registrarme"}
-              </button>
-            </form>
-            <div className="auth-switch">
-              ¿Ya tienes una cuenta?
-              <button onClick={() => switchModal("login")}>
-                Inicia Sesión
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* --- MODAL LOGIN --- */}
-      {isLoginOpen && (
-        <div className="modal-overlay" onClick={closeAllModals}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={closeAllModals}>
-              &times;
-            </button>
-            <h2 className="modal-title">Bienvenido de nuevo</h2>
-
-            {message.text && (
-              <div
-                className={`alert-message ${message.type === "error" ? "alert-error" : "alert-success"}`}
-              >
-                {message.text}
-              </div>
-            )}
-
-            <form onSubmit={handleLogin}>
-              <div className="form-group">
-                <label>Nombre de Usuario</label>
-                <input
-                  type="text"
-                  className="form-input"
-                  placeholder="Tu usuario"
-                  value={usernameAuth}
-                  onChange={(e) => setUsernameAuth(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label>Contraseña</label>
-                <input
-                  type="password"
-                  className="form-input"
-                  placeholder="Tu contraseña"
-                  value={passwordAuth}
-                  onChange={(e) => setPasswordAuth(e.target.value)}
-                  required
-                />
-              </div>
-              <button
-                type="submit"
-                className="btn-main btn-submit"
-                disabled={isLoading}
-              >
-                {isLoading ? "Entrando..." : "Ingresar"}
-              </button>
-            </form>
-            <div className="auth-switch">
-              ¿No tienes una cuenta?
-              <button onClick={() => switchModal("register")}>
-                Regístrate
-              </button>
-            </div>
           </div>
         </div>
       )}
@@ -479,14 +276,15 @@ const Home: React.FC = () => {
             </>
           ) : (
             <>
+              {/* Navegación a las nuevas páginas */}
               <button
-                onClick={() => setIsLoginOpen(true)}
+                onClick={() => navigate('/login')}
                 className="btn-login"
               >
                 Iniciar Sesión
               </button>
               <button
-                onClick={() => setIsRegisterOpen(true)}
+                onClick={() => navigate('/registro')}
                 className="btn-register"
               >
                 Registrarme
@@ -505,15 +303,15 @@ const Home: React.FC = () => {
             <span className="tag">Innovación</span>
             <span className="tag">Aplicaciones</span>
           </div>
-          <h1>FACTORIZ</h1>
+          <h1>AURA / FACTORIZ</h1>
 
           <p>
             El equipo detrás de aplicaciones profesionales. Desarrollamos
             aplicaciones y plataformas que combinan tecnología, innovación y
             experiencia de usuario para mejorar la forma en que las personas
-            aceden a servicios y herramientas digitales.
+            acceden a servicios y herramientas digitales.
           </p>
-          <button className="btn-main">SABER MAS</button>
+          <button className="btn-main" onClick={() => navigate('/servicios')}>SABER MÁS</button>
         </div>
       </section>
 
@@ -556,10 +354,8 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* --- QUÉ OFRECE LA EMPRESA (REDiseño Premium Horizontal) --- */}
+      {/* --- QUÉ OFRECE LA EMPRESA --- */}
       <section className="section" id="servicios">
-        
-        {/* Unifica el header dentro de un contenedor para mejor diseño */}
         <div className="servicios-frame">
           <div className="servicios-header">
             <h2 className="section-title">¿Qué ofrece la empresa?</h2>
@@ -570,24 +366,16 @@ const Home: React.FC = () => {
             </p>
           </div>
 
-          {/* --- CONTENEDOR PRINCIPAL DEL SLIDER CON BOTONES --- */}
           <div className="horizontal-slider-wrapper">
-            
-            {/* Botón Izquierdo (ChevronLeft) */}
             <button className="slider-nav-btn left" onClick={scrollLeft}>
               <ChevronLeft size={30} />
             </button>
 
-            {/* El slider en sí (con la referencia 'ref') */}
             <div className="horizontal-slider" ref={sliderRef}>
-              
-              {/* Primer Celular (Feature 1) */}
               <div className="horizontal-slide">
                 <div className="feature-card">
                   <div className="feature-text">
-                    <h2>
-                      Aumenta la visibilidad y atrae nuevos clientes
-                    </h2>
+                    <h2>Aumenta la visibilidad y atrae nuevos clientes</h2>
                     <p>
                       Moderniza tu presencia digital. Con nuestra plataforma, tu negocio estará visible para
                       cientos de usuarios que buscan servicios de belleza y estética profesional como el tuyo.
@@ -604,13 +392,10 @@ const Home: React.FC = () => {
                 </div>
               </div>
 
-              {/* Segundo Celular (Feature 2) */}
               <div className="horizontal-slide">
                 <div className="feature-card">
                   <div className="feature-text">
-                    <h2>
-                      Simplifica tus reservas y optimiza la gestión
-                    </h2>
+                    <h2>Simplifica tus reservas y optimiza la gestión</h2>
                     <p>
                       Olvídate de las llamadas perdidas y los mensajes sin responder.
                       Tus clientes pueden reservar citas las 24/7 desde cualquier
@@ -627,21 +412,17 @@ const Home: React.FC = () => {
                   </div>
                 </div>
               </div>
-              
             </div>
 
-            {/* Botón Derecho (ChevronRight) */}
             <button className="slider-nav-btn right" onClick={scrollRight}>
               <ChevronRight size={30} />
             </button>
           </div>
 
-          {/* Puntos de paginación (Visuales) */}
           <div className="pagination-dots">
             <span className="dot active"></span>
             <span className="dot"></span>
           </div>
-          
         </div>
       </section>
 
@@ -654,11 +435,7 @@ const Home: React.FC = () => {
         <div className="grid-benefits" style={{ marginTop: "4rem" }}>
           <div className="benefit-card">
             <div className="benefit-icon-wrapper">
-              <img
-              src={Ia}
-              alt="jj"
-              className="iconobeni"
-            />
+              <img src={Ia} alt="Innovación" className="iconobeni" />
               <span className="icon-dot"></span>
             </div>
             <h3>Innovación tecnológica</h3>
@@ -671,11 +448,7 @@ const Home: React.FC = () => {
 
           <div className="benefit-card">
             <div className="benefit-icon-wrapper">
-                <img
-              src={Calendario}
-              alt="jj"
-              className="iconobeni"
-            />
+              <img src={Calendario} alt="Optimización" className="iconobeni" />
               <span className="icon-dot"></span>
             </div>
             <h3>Optimización del servicio</h3>
@@ -688,11 +461,7 @@ const Home: React.FC = () => {
 
           <div className="benefit-card">
             <div className="benefit-icon-wrapper">
-              <img
-              src={ubicacion}
-              alt="jj"
-              className="iconobeni"
-            />
+              <img src={ubicacion} alt="Conexión" className="iconobeni" />
               <span className="icon-dot"></span>
             </div>
             <h3>Conexión con clientes</h3>
@@ -733,22 +502,18 @@ const Home: React.FC = () => {
         <h2 className="section-title">Nuestro Equipo</h2>
         <div className="grid-4" style={{ marginTop: "4rem" }}>
           <div className="team-card">
-            
             <h4>Alex Javier Apaza Nina</h4>
             <p>UI Designer & Co-founder</p>
           </div>
           <div className="team-card">
-           
             <h4>Brayan Choquehuanca Mamani</h4>
             <p>UX Designer & Co-founder</p>
           </div>
           <div className="team-card">
-            
             <h4>Alvin Ariel Cayo Quispe</h4>
             <p>Developer</p>
           </div>
           <div className="team-card">
-           
             <h4>Reyshel Brisneyda Ortiz Gambarte</h4>
             <p>Diseñador UI/UX</p>
           </div>

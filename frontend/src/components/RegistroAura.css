@@ -1,0 +1,245 @@
+:root {
+  --aura-background: #f8f9fa;
+  --aura-primary: #1a1a1a;
+  --aura-white: #ffffff;
+  --aura-gold: #d4af37;
+  --aura-accent: #666666;
+  --aura-black: #000000;
+}
+
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--aura-background);
+  padding: 2rem 1.5rem;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 550px;
+  background-color: var(--aura-white);
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.register-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 2rem;
+  color: var(--aura-primary);
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin: 0 0 0.5rem 0;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--aura-accent);
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Selector de Roles */
+.role-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.role-button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem;
+  border: 1px solid var(--aura-gold);
+  border-radius: 12px;
+  background-color: var(--aura-white);
+  color: var(--aura-primary);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+}
+
+.role-button.active {
+  background-color: var(--aura-primary);
+  color: var(--aura-white);
+  border-color: var(--aura-primary);
+  box-shadow: 0 4px 10px rgba(26, 26, 26, 0.2);
+}
+
+.role-icon {
+  margin-right: 8px;
+}
+
+/* Formulario General */
+.register-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.section-label {
+  color: var(--aura-primary);
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 1.5rem 0 1rem 0;
+  border-bottom: 2px solid var(--aura-background);
+  padding-bottom: 0.5rem;
+}
+
+.sub-label {
+  color: var(--aura-primary);
+  font-size: 0.95rem;
+  font-weight: bold;
+  margin: 0.5rem 0 0.5rem 0.25rem;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  background-color: var(--aura-white);
+  border: 1px solid var(--aura-gold);
+  border-radius: 12px;
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+  height: 55px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+  transition: border-color 0.3s ease;
+}
+
+.input-container:focus-within {
+  border-color: var(--aura-primary);
+}
+
+.input-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.input-icon {
+  color: var(--aura-primary);
+  margin-right: 10px;
+}
+
+.input-field {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  color: var(--aura-primary);
+  background: transparent;
+  width: 100%;
+}
+
+.input-field::placeholder {
+  color: #b0b0b0;
+}
+
+/* Selector Horizontal (Botones de Género y Categoría) */
+.selection-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.selection-btn {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid var(--aura-gold);
+  border-radius: 10px;
+  background-color: var(--aura-white);
+  color: var(--aura-primary);
+  font-size: 0.85rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.selection-btn.active {
+  background-color: var(--aura-accent);
+  color: var(--aura-white);
+  border-color: var(--aura-accent);
+}
+
+/* Sección de Negocio y Archivos */
+.business-section {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.upload-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--aura-white);
+  border: 2px dashed var(--aura-primary);
+  border-radius: 12px;
+  padding: 1.2rem;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  color: var(--aura-primary);
+  font-weight: bold;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.upload-button:hover {
+  background-color: #f0f0f0;
+}
+
+/* Botones Finales */
+.button-submit {
+  background-color: var(--aura-primary);
+  color: var(--aura-white);
+  height: 55px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  box-shadow: 0 4px 12px rgba(26, 26, 26, 0.2);
+  transition: transform 0.1s ease;
+}
+
+.button-submit:active {
+  transform: scale(0.98);
+}
+
+.button-secondary {
+  background: none;
+  border: none;
+  color: var(--aura-accent);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  text-decoration: none;
+}
+
+.button-secondary:hover {
+  text-decoration: underline;
+}
+
+/* Responsivo para móviles */
+@media (max-width: 600px) {
+  .input-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}
