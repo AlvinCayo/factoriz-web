@@ -1,6 +1,5 @@
-// frontend/src/pages/NuestraApp.tsx
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './NuestraApp.css';
 import './Home.css'; 
 
@@ -13,105 +12,24 @@ import mackdashboard from '../assets/mackdash.png';
 import interaccion from '../assets/interaccion.jpg';
 
 const NuestraApp: React.FC = () => {
-  // --- ESTADOS PARA MODALES ---
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
-
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState({ type: '', text: '' });
-  const [isLoading, setIsLoading] = useState(false);
-
+  const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState<string | null>(null);
 
   useEffect(() => {
-    const savedUser = localStorage.getItem('username');
-    if (savedUser) {
-      setCurrentUser(savedUser);
+    const savedUserId = localStorage.getItem('userId');
+    const savedRole = localStorage.getItem('userRole');
+    
+    if (savedUserId) {
+      setCurrentUser(savedRole === 'centro' ? 'Negocio' : 'Usuario'); 
     }
   }, []);
 
-  const resetForm = () => {
-    setUsername('');
-    setPassword('');
-    setMessage({ type: '', text: '' });
-  };
-
-  const closeAllModals = () => {
-    setIsLoginOpen(false);
-    setIsRegisterOpen(false);
-    resetForm();
-  };
-
-  const switchModal = (to: 'login' | 'register') => {
-    resetForm();
-    if (to === 'login') {
-      setIsRegisterOpen(false);
-      setIsLoginOpen(true);
-    } else {
-      setIsLoginOpen(false);
-      setIsRegisterOpen(true);
-    }
-  };
-
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setMessage({ type: '', text: '' });
-
-    try {
-      const res = await fetch(import.meta.env.VITE_API_URL + '/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Error al registrar');
-
-      setMessage({ type: 'success', text: '¡Cuenta creada! Ahora inicia sesión.' });
-      setTimeout(() => switchModal('login'), 2000);
-    } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : 'Error desconocido';
-      setMessage({ type: 'error', text: errorMessage });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setMessage({ type: '', text: '' });
-
-    try {
-      const res = await fetch(import.meta.env.VITE_API_URL + '/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Credenciales incorrectas');
-
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('username', data.username);
-
-      setCurrentUser(data.username);
-      closeAllModals();
-    } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : 'Error desconocido';
-      setMessage({ type: 'error', text: errorMessage });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userRole');
     setCurrentUser(null);
   };
 
-  // Función para desplazamiento suave a los enlaces internos
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
     const element = document.getElementById(id);
@@ -122,68 +40,7 @@ const NuestraApp: React.FC = () => {
 
   return (
     <div className="servicios-container">
-      {/* --- MODALES --- */}
-      {isRegisterOpen && (
-        <div className="modal-overlay" onClick={closeAllModals}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={closeAllModals}>&times;</button>
-            <h2 className="modal-title">Crea tu Cuenta</h2>
-            {message.text && (
-              <div className={`alert-message ${message.type === 'error' ? 'alert-error' : 'alert-success'}`}>
-                {message.text}
-              </div>
-            )}
-            <form onSubmit={handleRegister}>
-              <div className="form-group">
-                <label>Nombre de Usuario</label>
-                <input type="text" className="form-input" value={username} onChange={(e) => setUsername(e.target.value)} required />
-              </div>
-              <div className="form-group">
-                <label>Contraseña</label>
-                <input type="password" className="form-input" value={password} onChange={(e) => setPassword(e.target.value)} required />
-              </div>
-              <button type="submit" className="btn-main btn-submit" disabled={isLoading}>
-                {isLoading ? 'Registrando...' : 'Registrarme'}
-              </button>
-            </form>
-            <div className="auth-switch">
-              ¿Ya tienes una cuenta? <button onClick={() => switchModal('login')}>Inicia Sesión</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {isLoginOpen && (
-        <div className="modal-overlay" onClick={closeAllModals}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={closeAllModals}>&times;</button>
-            <h2 className="modal-title">Bienvenido de nuevo</h2>
-            {message.text && (
-              <div className={`alert-message ${message.type === 'error' ? 'alert-error' : 'alert-success'}`}>
-                {message.text}
-              </div>
-            )}
-            <form onSubmit={handleLogin}>
-              <div className="form-group">
-                <label>Nombre de Usuario</label>
-                <input type="text" className="form-input" value={username} onChange={(e) => setUsername(e.target.value)} required />
-              </div>
-              <div className="form-group">
-                <label>Contraseña</label>
-                <input type="password" className="form-input" value={password} onChange={(e) => setPassword(e.target.value)} required />
-              </div>
-              <button type="submit" className="btn-main btn-submit" disabled={isLoading}>
-                {isLoading ? 'Entrando...' : 'Ingresar'}
-              </button>
-            </form>
-            <div className="auth-switch">
-              ¿No tienes una cuenta? <button onClick={() => switchModal('register')}>Regístrate</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* NAVEGACIÓN (Navbar) */}
+      {/* NAVEGACIÓN */}
       <nav className="navbar">
         <Link to="/" className="logo-container">
           <img src={logoFactoriz} alt="Logo Factoriz" className="logo-img" />
@@ -196,34 +53,36 @@ const NuestraApp: React.FC = () => {
         </div>
         <div className="nav-buttons">
           {currentUser ? (
-            <><span style={{ fontWeight: 600, marginRight: '10px', color: '#000' }}>Hola, {currentUser}</span><button onClick={handleLogout} className="btn-logout">Salir</button></>
+            <>
+              <span style={{ fontWeight: 600, marginRight: '10px', color: '#000' }}>Hola, {currentUser}</span>
+              <button onClick={handleLogout} className="btn-logout">Salir</button>
+            </>
           ) : (
-            <><button onClick={() => setIsLoginOpen(true)} className="btn-login">Iniciar Sesión</button><button onClick={() => setIsRegisterOpen(true)} className="btn-register">Registrarme</button></>
+            <>
+              <button onClick={() => navigate('/login')} className="btn-login">Iniciar Sesión</button>
+              <button onClick={() => navigate('/registro')} className="btn-register">Registrarme</button>
+            </>
           )}
         </div>
       </nav>
 
-      {/* --- HERO SECTION SERVICIOS --- */}
+      {/* HERO SECTION */}
       <header className="servicios-hero">
         <div className="hero-tags">
-          {/* Etiquetas convertidas en enlaces ancla (Anchor Links) */}
           <a href="#belleza" className="tag interactive-tag" onClick={(e) => scrollToSection(e, 'belleza')}>Belleza</a>
           <a href="#innovacion" className="tag interactive-tag" onClick={(e) => scrollToSection(e, 'innovacion')}>Innovación</a>
           <a href="#aplicaciones" className="tag interactive-tag" onClick={(e) => scrollToSection(e, 'aplicaciones')}>Servicios</a>
         </div>
         <h1>Nuestra App</h1>
         <p>
-          {/* Texto mucho más concreto y al grano */}
           Herramientas tecnológicas para salones, peluquerías y barberías. 
           Optimiza la gestión de tu negocio y mejora la experiencia de tus clientes 
           a través de nuestra plataforma moderna e intuitiva.
         </p>
       </header>
 
-      {/* --- CONTENIDO PRINCIPAL --- */}
+      {/* CONTENIDO PRINCIPAL */}
       <main className="servicios-content">
-
-        {/* --- NUEVO SUBTÍTULO: LO QUE TE OFRECEMOS --- */}
         <section className="oferta-header-section" id="aplicaciones">
           <div className="oferta-header-content">
             <span className="oferta-badge">Características</span>
@@ -233,13 +92,10 @@ const NuestraApp: React.FC = () => {
           </div>
         </section>
 
-        {/* SERVICIO 1 (Anclado a "Belleza") */}
         <section className="servicio-row" id="innovacion">
           <div className="servicio-text">
             <h2>Gestión de reservas digitales</h2>
-            <p>
-              Implementamos sistemas que permiten administrar citas de manera eficiente, reduciendo tiempos de espera y mejorando la organización del negocio.
-            </p>
+            <p>Implementamos sistemas que permiten administrar citas de manera eficiente, reduciendo tiempos de espera y mejorando la organización del negocio.</p>
             <div className="servicio-features">
               <h4>Incluye:</h4>
               <ul>
@@ -254,13 +110,10 @@ const NuestraApp: React.FC = () => {
           </div>
         </section>
 
-        {/* SERVICIO 2 (Invertido) */}
         <section className="servicio-row reverse">
           <div className="servicio-text">
             <h2>Geolocalización de servicios</h2>
-            <p>
-              Facilitamos la búsqueda de establecimientos cercanos, permitiendo a los usuarios encontrar rápidamente opciones disponibles según su ubicación.
-            </p>
+            <p>Facilitamos la búsqueda de establecimientos cercanos, permitiendo a los usuarios encontrar rápidamente opciones disponibles según su ubicación.</p>
             <div className="servicio-features">
               <h4>Funciones:</h4>
               <ul>
@@ -275,13 +128,10 @@ const NuestraApp: React.FC = () => {
           </div>
         </section>
 
-        {/* SERVICIO 3 (Anclado a "Innovación") */}
         <section className="servicio-row" id="belleza">
           <div className="servicio-text">
             <h2>Análisis facial inteligente</h2>
-            <p>
-              Integramos tecnología que permite recomendar estilos de corte, peinados o barba según las características del rostro del usuario.
-            </p>
+            <p>Integramos tecnología que permite recomendar estilos de corte, peinados o barba según las características del rostro del usuario.</p>
             <div className="servicio-features">
               <h4>Beneficios:</h4>
               <ul>
@@ -296,13 +146,10 @@ const NuestraApp: React.FC = () => {
           </div>
         </section>
 
-        {/* SERVICIO 4 (Invertido) */}
         <section className="servicio-row reverse">
           <div className="servicio-text">
             <h2>Herramientas de gestión para negocios</h2>
-            <p>
-              Brindamos soluciones que ayudan a los establecimientos a organizar mejor sus servicios y clientes.
-            </p>
+            <p>Brindamos soluciones que ayudan a los establecimientos a organizar mejor sus servicios y clientes.</p>
             <div className="servicio-features">
               <h4>Permite:</h4>
               <ul>
@@ -317,13 +164,10 @@ const NuestraApp: React.FC = () => {
           </div>
         </section>
 
-        {/* SERVICIO 5 */}
         <section className="servicio-row">
           <div className="servicio-text">
             <h2>Conexión entre clientes y negocios</h2>
-            <p>
-              Nuestra plataforma facilita la interacción directa entre usuarios y profesionales, mejorando la comunicación y el acceso a los servicios.
-            </p>
+            <p>Nuestra plataforma facilita la interacción directa entre usuarios y profesionales, mejorando la comunicación y el acceso a los servicios.</p>
             <div className="servicio-features">
               <h4>Ventajas:</h4>
               <ul>
@@ -339,8 +183,6 @@ const NuestraApp: React.FC = () => {
         </section>
 
       </main>
-
-      {/* FOOTER GLOBAL */}
       <Footer />
     </div>
   );
