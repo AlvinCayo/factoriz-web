@@ -130,7 +130,7 @@ async function updateBusinessProfile(req, res) {
 }
 
 async function getAllBusinesses(req, res) {
-  const client = require('../config/db');
+  const client = require('../db');
   try {
     const queryText = `
       SELECT u.id, u.opening_time, u.closing_time, u.working_days, 
@@ -159,7 +159,7 @@ async function updateShopPhotos(req, res) {
 }
 
 async function savePushToken(req, res) {
-  const client = require('../config/db');
+  const client = require('../db');
   try {
     const { id } = req.params;
     const { token } = req.body;
