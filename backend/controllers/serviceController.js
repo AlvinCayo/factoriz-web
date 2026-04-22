@@ -1,4 +1,4 @@
-const client = require('../config/db');
+const client = require('../db');
 
 async function createService(req, res) {
   try {

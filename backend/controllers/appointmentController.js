@@ -1,4 +1,4 @@
-const client = require('../config/db');
+const client = require('../db');
 
 // --- MOTOR DE NOTIFICACIONES PUSH ---
 async function sendPushNotification(expoPushToken, title, body) {
