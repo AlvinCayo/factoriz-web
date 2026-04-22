@@ -1,18 +1,35 @@
-/* frontend/src/pages/Servicios.css */
+/* frontend/src/pages/NuestraApp.css */
 
+/* --- MAGIA DEL SCROLL PARA NUESTRA APP --- */
 .servicios-container {
   font-family: 'Poppins', sans-serif;
   color: #111827;
   background-color: #ffffff;
   overflow-x: hidden;
+  
+  /* Activamos el imán magnético */
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y proximity;
+  scroll-behavior: smooth;
+}
+
+/* Ocultar barra de scroll para un diseño más limpio */
+.servicios-container::-webkit-scrollbar {
+  display: none;
 }
 
 /* --- HERO SECTION --- */
 .servicios-hero {
-  padding: 5rem 5% 3rem;
-  text-align: left;
+  min-height: 100vh; /* Ocupa 1 pantalla exacta */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra el contenido verticalmente */
+  align-items: flex-start; /* Lo mantiene alineado a la izquierda */
+  padding: 130px 5% 60px; /* 130px arriba para que no lo tape el Menú Fijo */
   background-color: #F2E9E2;
   border-bottom: 1px solid #F3F4F6;
+  scroll-snap-align: start; /* Aquí se pega el imán */
 }
 
 .hero-tags {
@@ -48,16 +65,17 @@
 
 /* --- LISTA DE SERVICIOS --- */
 .servicios-content {
-  padding: 5rem 5% 8rem;
-  display: flex;
-  flex-direction: column;
-  gap: 8rem; /* Espaciado amplio entre servicios */
+  /* Quitamos el flex y los gaps gigantes. Cada fila se acomodará sola por la altura 100vh */
+  display: block; 
 }
 
 .servicio-row {
+  min-height: 100vh; /* Cada servicio ocupa exactamente 1 pantalla */
   display: flex;
-  align-items: center;
+  align-items: center; /* Centra el texto y la imagen verticalmente */
   gap: 6rem;
+  padding: 130px 5% 60px; /* 130px arriba para proteger el título del Menú Fijo */
+  scroll-snap-align: start; /* Aquí se pega el imán */
 }
 
 .servicio-row.reverse {
@@ -156,19 +174,98 @@
 
 @media (max-width: 768px) {
   .servicios-hero {
-    padding: 3rem 5% 2rem;
+    padding: 120px 5% 2rem;
   }
   .servicios-hero h1 {
     font-size: 2.8rem;
   }
-  .servicios-content {
-    gap: 5rem;
-  }
   .servicio-row, .servicio-row.reverse {
     flex-direction: column;
     text-align: left;
+    padding-top: 100px;
   }
   .servicio-image {
     max-width: 100%;
+  }
+}
+
+/* =========================================================
+   NUEVOS ESTILOS: ETIQUETAS INTERACTIVAS Y SUBTÍTULO
+   ========================================================= */
+
+/* Hacemos que los tags parezcan botones clickeables */
+.tag.interactive-tag {
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.tag.interactive-tag:hover {
+  background-color: #4E161F; /* Color burdeos corporativo */
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(78, 22, 31, 0.2);
+}
+
+/* --- SECCIÓN SUBTÍTULO: "LO QUE TE OFRECEMOS" --- */
+.oferta-header-section {
+  min-height: 100vh; /* Para que el scroll magnético lo respete */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scroll-snap-align: start;
+  background-color: #FFFFFF;
+}
+
+.oferta-header-content {
+  text-align: center;
+  padding: 0 5%;
+  max-width: 800px;
+}
+
+.oferta-badge {
+  display: inline-block;
+  background-color: #F2E9E2;
+  color: #4E161F;
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 1.5rem;
+}
+
+.oferta-header-content h2 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #000000;
+  margin-bottom: 1rem;
+  line-height: 1.1;
+}
+
+.oferta-header-content p {
+  font-size: 1.2rem;
+  color: #6B7280;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.oferta-line {
+  width: 60px;
+  height: 4px;
+  background-color: #4E161F;
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+/* Responsividad para el nuevo subtítulo */
+@media (max-width: 768px) {
+  .oferta-header-content h2 {
+    font-size: 2.5rem;
+  }
+  .oferta-header-content p {
+    font-size: 1.05rem;
   }
 }
