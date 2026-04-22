@@ -12,6 +12,7 @@ import FloatingDownload from './components/FloatingDownload';
 import Login from './components/login'; 
 import RegistroAura from './components/register';
 import AdminDashboard from './components/AdminDashboard'; 
+import RecuperarPassword from './components/forgot-password'; // <-- 1. NUEVO IMPORT
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         {/* Rutas de Autenticación */}
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<RegistroAura />} />
+        <Route path="/recuperar-password" element={<RecuperarPassword />} /> {/* <-- 2. NUEVA RUTA */}
         
         {/* Ruta del Panel de Administración/Sistema */}
         <Route path="/dashboard" element={<AdminDashboard />} />

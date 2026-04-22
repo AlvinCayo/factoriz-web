@@ -26,18 +26,36 @@ async function registerClient(req, res) {
 }
 
 async function registerBusiness(req, res) {
-  const { email, password, repName, repLastName, birthDate, gender, phone, licenseUrl, zone, street, buildingNumber, businessCategory } = req.body;
+  // Nota que ya no recibimos "licenseUrl" del req.body
+  const { email, password, repName, repLastName, birthDate, gender, phone, zone, street, buildingNumber, businessCategory } = req.body;
   const dbClient = await pool.connect();
 
   try {
     await dbClient.query('BEGIN');
     
+    let secureLicenseUrl = null;
+
+    // 1. SI VIENE UN ARCHIVO, LO SUBIMOS A CLOUDINARY
+    if (req.file) {
+      // Convertimos el archivo en memoria a formato Base64 para Cloudinary
+      const b64 = Buffer.from(req.file.buffer).toString('base64');
+      const dataURI = "data:" + req.file.mimetype + ";base64," + b64;
+      
+      const uploadResponse = await cloudinary.uploader.upload(dataURI, {
+        resource_type: "auto", // Importante para que acepte PDFs
+        folder: "aura_licencias"
+      });
+      secureLicenseUrl = uploadResponse.secure_url;
+    }
+
+    // 2. CREAMOS EL USUARIO
     const userQuery = 'INSERT INTO users (email, password, role) VALUES ($1, $2, $3) RETURNING id';
     const userResult = await dbClient.query(userQuery, [email, password, 'centro']);
     const userId = userResult.rows[0].id;
 
+    // 3. CREAMOS EL PERFIL GUARDANDO LA URL REAL DE CLOUDINARY
     const profileQuery = 'INSERT INTO business_profiles (user_id, representative_name, representative_last_name, birth_date, gender, phone, license_pdf_url, zone, street, building_number, business_category) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)';
-    await dbClient.query(profileQuery, [userId, repName, repLastName, birthDate, gender, phone, licenseUrl, zone, street, buildingNumber, businessCategory]);
+    await dbClient.query(profileQuery, [userId, repName, repLastName, birthDate, gender, phone, secureLicenseUrl, zone, street, buildingNumber, businessCategory]);
 
     await dbClient.query('COMMIT');
     res.status(201).json({ success: true, userId });

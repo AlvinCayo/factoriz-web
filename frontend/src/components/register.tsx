@@ -24,7 +24,8 @@ export default function RegistroAura() {
   const [birthDate, setBirthDate] = useState<string>('');
   const [gender, setGender] = useState<string>('');
   
-  const [licenseUrl, setLicenseUrl] = useState<string>('');
+  // AHORA GUARDAMOS EL ARCHIVO REAL EN ESTADO
+  const [licenseFile, setLicenseFile] = useState<File | null>(null);
   const [licenseName, setLicenseName] = useState<string>('');
   const [zone, setZone] = useState<string>('');
   const [street, setStreet] = useState<string>('');
@@ -43,7 +44,7 @@ export default function RegistroAura() {
     const file = e.target.files?.[0];
     if (file) {
       setLicenseName(file.name);
-      setLicenseUrl(URL.createObjectURL(file)); 
+      setLicenseFile(file); // Guardamos el objeto File (no la url falsa)
     }
   };
 
@@ -62,32 +63,44 @@ export default function RegistroAura() {
       ? 'https://aura-ukzs.onrender.com/api/auth/register/business' 
       : 'https://aura-ukzs.onrender.com/api/auth/register/client';
 
-    const basePayload = { email, password, birthDate, gender, phone };
+    let requestOptions: RequestInit;
 
-    const clientPayload = {
-      ...basePayload,
-      firstName,
-      lastName
-    };
+    if (isBusiness) {
+      // 1. SI ES NEGOCIO, USAMOS FORMDATA PARA PODER ENVIAR EL ARCHIVO PDF
+      const formData = new FormData();
+      formData.append('email', email);
+      formData.append('password', password);
+      formData.append('birthDate', birthDate);
+      formData.append('gender', gender);
+      formData.append('phone', phone);
+      formData.append('repName', firstName);
+      formData.append('repLastName', lastName);
+      formData.append('zone', zone);
+      formData.append('street', street);
+      formData.append('buildingNumber', buildingNumber);
+      formData.append('businessCategory', businessCategory);
+      
+      if (licenseFile) {
+        formData.append('licenseFile', licenseFile); // Adjuntamos el archivo físico
+      }
 
-    const businessPayload = {
-      ...basePayload,
-      repName: firstName,
-      repLastName: lastName,
-      licenseUrl: licenseUrl || "sin_pdf_temporal", // Evita envíos nulos conflictivos
-      zone,
-      street,
-      buildingNumber,
-      businessCategory
-    };
-
-    const finalPayload = isBusiness ? businessPayload : clientPayload;
-
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(finalPayload)
-    };
+      requestOptions = {
+        method: 'POST',
+        // IMPORTANTE: Con FormData NO se pone el header 'Content-Type', el navegador lo pone solo.
+        body: formData
+      };
+    } else {
+      // 2. SI ES CLIENTE, USAMOS JSON COMO SIEMPRE
+      const clientPayload = {
+        email, password, birthDate, gender, phone, firstName, lastName
+      };
+      
+      requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(clientPayload)
+      };
+    }
 
     try {
       const response = await fetch(endpoint, requestOptions);
@@ -241,7 +254,7 @@ export default function RegistroAura() {
               
               <input 
                 type="file" 
-                accept="application/pdf"
+                accept="application/pdf, image/jpeg, image/png"
                 ref={fileInputRef}
                 style={{ display: 'none' }}
                 onChange={handleFileChange}
@@ -249,7 +262,7 @@ export default function RegistroAura() {
               />
               <button type="button" className="upload-button" onClick={handleFileClick} disabled={isLoading}>
                 <FileText size={24} className="input-icon" />
-                <span>{licenseName ? licenseName : 'Cargar PDF de Licencia'}</span>
+                <span>{licenseName ? licenseName : 'Cargar Licencia (PDF o Foto)'}</span>
               </button>
 
               <div className="input-container">
