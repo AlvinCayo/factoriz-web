@@ -13,6 +13,7 @@ export default function RegistroAura() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [role, setRole] = useState<UserRole>('usuario');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -42,8 +43,6 @@ export default function RegistroAura() {
     const file = e.target.files?.[0];
     if (file) {
       setLicenseName(file.name);
-      // Para web, creamos una URL temporal para el archivo, 
-      // aunque dependiendo de tu backend puede que necesites subirlo como FormData
       setLicenseUrl(URL.createObjectURL(file)); 
     }
   };
@@ -55,6 +54,8 @@ export default function RegistroAura() {
       mostrarAlerta('Aviso', 'Completa los campos obligatorios');
       return;
     }
+
+    setIsLoading(true);
 
     const isBusiness = role === 'centro';
     const endpoint = isBusiness 
@@ -73,7 +74,7 @@ export default function RegistroAura() {
       ...basePayload,
       repName: firstName,
       repLastName: lastName,
-      licenseUrl,
+      licenseUrl: licenseUrl || "sin_pdf_temporal", // Evita envíos nulos conflictivos
       zone,
       street,
       buildingNumber,
@@ -96,10 +97,12 @@ export default function RegistroAura() {
         mostrarAlerta('Éxito', 'Cuenta creada correctamente');
         navigate('/login', { replace: true });
       } else {
-        mostrarAlerta('Error', 'No se pudo crear la cuenta');
+        mostrarAlerta('Error', data.error || 'No se pudo crear la cuenta');
       }
     } catch (error) {
       mostrarAlerta('Error', 'Fallo de comunicación con el servidor');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -117,6 +120,7 @@ export default function RegistroAura() {
             type="button"
             className={`role-button ${role === 'usuario' ? 'active' : ''}`} 
             onClick={() => setRole('usuario')}
+            disabled={isLoading}
           >
             <User size={20} className="role-icon" />
             <span>Cliente</span>
@@ -126,6 +130,7 @@ export default function RegistroAura() {
             type="button"
             className={`role-button ${role === 'centro' ? 'active' : ''}`} 
             onClick={() => setRole('centro')}
+            disabled={isLoading}
           >
             <Building size={20} className="role-icon" />
             <span>Negocio</span>
@@ -144,6 +149,7 @@ export default function RegistroAura() {
               value={email} 
               placeholder="Correo Electrónico"
               required
+              disabled={isLoading}
             />
           </div>
 
@@ -156,6 +162,7 @@ export default function RegistroAura() {
               value={password} 
               placeholder="Contraseña segura"
               required
+              disabled={isLoading}
             />
           </div>
 
@@ -171,6 +178,7 @@ export default function RegistroAura() {
                 value={firstName} 
                 placeholder="Tus Nombres"
                 required
+                disabled={isLoading}
               />
             </div>
 
@@ -183,6 +191,7 @@ export default function RegistroAura() {
                 value={lastName} 
                 placeholder="Tus Apellidos"
                 required
+                disabled={isLoading}
               />
             </div>
           </div>
@@ -196,6 +205,7 @@ export default function RegistroAura() {
               value={phone} 
               placeholder="Celular"
               required
+              disabled={isLoading}
             />
           </div>
 
@@ -208,18 +218,19 @@ export default function RegistroAura() {
               onChange={(e) => setBirthDate(e.target.value)} 
               value={birthDate} 
               required
+              disabled={isLoading}
             />
           </div>
 
           <h4 className="sub-label">Género</h4>
           <div className="selection-row">
-            <button type="button" className={`selection-btn ${gender === 'masculino' ? 'active' : ''}`} onClick={() => setGender('masculino')}>
+            <button type="button" className={`selection-btn ${gender === 'masculino' ? 'active' : ''}`} onClick={() => setGender('masculino')} disabled={isLoading}>
               Masculino
             </button>
-            <button type="button" className={`selection-btn ${gender === 'femenino' ? 'active' : ''}`} onClick={() => setGender('femenino')}>
+            <button type="button" className={`selection-btn ${gender === 'femenino' ? 'active' : ''}`} onClick={() => setGender('femenino')} disabled={isLoading}>
               Femenino
             </button>
-            <button type="button" className={`selection-btn ${gender === 'otro' ? 'active' : ''}`} onClick={() => setGender('otro')}>
+            <button type="button" className={`selection-btn ${gender === 'otro' ? 'active' : ''}`} onClick={() => setGender('otro')} disabled={isLoading}>
               Otro
             </button>
           </div>
@@ -234,47 +245,48 @@ export default function RegistroAura() {
                 ref={fileInputRef}
                 style={{ display: 'none' }}
                 onChange={handleFileChange}
+                disabled={isLoading}
               />
-              <button type="button" className="upload-button" onClick={handleFileClick}>
+              <button type="button" className="upload-button" onClick={handleFileClick} disabled={isLoading}>
                 <FileText size={24} className="input-icon" />
                 <span>{licenseName ? licenseName : 'Cargar PDF de Licencia'}</span>
               </button>
 
               <div className="input-container">
                 <MapPin size={20} className="input-icon" />
-                <input type="text" className="input-field" onChange={(e) => setZone(e.target.value)} value={zone} placeholder="Zona" required={role === 'centro'} />
+                <input type="text" className="input-field" onChange={(e) => setZone(e.target.value)} value={zone} placeholder="Zona" required={role === 'centro'} disabled={isLoading} />
               </div>
 
               <div className="input-container">
                 <Navigation size={20} className="input-icon" />
-                <input type="text" className="input-field" onChange={(e) => setStreet(e.target.value)} value={street} placeholder="Calle o Avenida" required={role === 'centro'} />
+                <input type="text" className="input-field" onChange={(e) => setStreet(e.target.value)} value={street} placeholder="Calle o Avenida" required={role === 'centro'} disabled={isLoading} />
               </div>
 
               <div className="input-container">
                 <Home size={20} className="input-icon" />
-                <input type="text" className="input-field" onChange={(e) => setBuildingNumber(e.target.value)} value={buildingNumber} placeholder="Número de Local" required={role === 'centro'} />
+                <input type="text" className="input-field" onChange={(e) => setBuildingNumber(e.target.value)} value={buildingNumber} placeholder="Número de Local" required={role === 'centro'} disabled={isLoading} />
               </div>
 
               <h4 className="sub-label">Categoría</h4>
               <div className="selection-row">
-                <button type="button" className={`selection-btn ${businessCategory === 'salon' ? 'active' : ''}`} onClick={() => setBusinessCategory('salon')}>
+                <button type="button" className={`selection-btn ${businessCategory === 'salon' ? 'active' : ''}`} onClick={() => setBusinessCategory('salon')} disabled={isLoading}>
                   Salón
                 </button>
-                <button type="button" className={`selection-btn ${businessCategory === 'barberia' ? 'active' : ''}`} onClick={() => setBusinessCategory('barberia')}>
+                <button type="button" className={`selection-btn ${businessCategory === 'barberia' ? 'active' : ''}`} onClick={() => setBusinessCategory('barberia')} disabled={isLoading}>
                   Barbería
                 </button>
-                <button type="button" className={`selection-btn ${businessCategory === 'unisex' ? 'active' : ''}`} onClick={() => setBusinessCategory('unisex')}>
+                <button type="button" className={`selection-btn ${businessCategory === 'unisex' ? 'active' : ''}`} onClick={() => setBusinessCategory('unisex')} disabled={isLoading}>
                   Unisex
                 </button>
               </div>
             </div>
           )}
 
-          <button type="submit" className="button-submit">
-            CREAR CUENTA
+          <button type="submit" className="button-submit" disabled={isLoading}>
+            {isLoading ? 'PROCESANDO...' : 'CREAR CUENTA'}
           </button>
 
-          <button type="button" className="button-secondary" onClick={() => navigate('/login')}>
+          <button type="button" className="button-secondary" onClick={() => navigate('/login')} disabled={isLoading}>
             Volver al inicio de sesión
           </button>
         </form>

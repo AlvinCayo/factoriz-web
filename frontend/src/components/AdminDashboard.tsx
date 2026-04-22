@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, Users, FileSignature, Activity, LogOut, 
@@ -10,20 +10,42 @@ import {
 } from 'recharts';
 import './AdminDashboard.css';
 
+// --- INTERFACES DE TYPESCRIPT (Esto quita los errores de variables) ---
+interface SystemUser {
+  id: string;
+  email: string;
+  role: string;
+  first_name: string;
+  last_name: string;
+  phone: string;
+  is_active: boolean;
+  is_approved: boolean;
+  zone?: string;
+  street?: string;
+  building_number?: string;
+  business_category?: string;
+  license_pdf_url?: string;
+}
+
+interface SystemLog {
+  email: string;
+  action: string;
+  timestamp?: string;
+}
+
 // Constantes de color para los gráficos
 const COLORS = ['#1a1a1a', '#d4af37', '#666666', '#007bff'];
-const GENDER_COLORS = ['#4A90E2', '#E91E63', '#9E9E9E'];
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState<boolean>(true);
-  const [systemUsers, setSystemUsers] = useState<any[]>([]);
-  const [systemLogs, setSystemLogs] = useState<any[]>([]);
+  const [systemUsers, setSystemUsers] = useState<SystemUser[]>([]);
+  const [systemLogs, setSystemLogs] = useState<SystemLog[]>([]);
   const [stats, setStats] = useState<any>(null);
   
   const [activeTab, setActiveTab] = useState<string>('overview');
-  const [selectedUser, setSelectedUser] = useState<any>(null);
+  const [selectedUser, setSelectedUser] = useState<SystemUser | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -106,7 +128,7 @@ export default function AdminDashboard() {
     }
   };
 
-  const openLicensePdf = (url: string) => {
+  const openLicensePdf = (url?: string) => {
     if (!url) return mostrarAlerta('Error', 'Sin documento válido registrado');
     const secureUrl = url.replace('http://', 'https://');
     window.open(secureUrl, '_blank');
@@ -154,7 +176,7 @@ export default function AdminDashboard() {
             <ResponsiveContainer width="100%" height={250}>
               <PieChart>
                 <Pie data={stats?.roles || []} dataKey="count" nameKey="name" cx="50%" cy="50%" outerRadius={80} label>
-                  {(stats?.roles || []).map((entry: any, index: number) => (
+                  {(stats?.roles || []).map((_: any, index: number) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
