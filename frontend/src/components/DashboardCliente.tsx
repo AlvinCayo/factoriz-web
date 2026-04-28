@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import {useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { LogOut, Star, Download } from 'lucide-react';
 import './DashboardCliente.css'; 
