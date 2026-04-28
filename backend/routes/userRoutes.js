@@ -35,15 +35,19 @@ router.post('/upload-file', upload.single('file'), (req, res) => {
   }
 });
 
-// --- Rutas Anteriores ---
+// --- Rutas de Usuarios ---
 router.post('/register', registerUser);
 router.post('/login', loginUser);
-router.get('/profile/:id/:role', getUserProfile);
+
+// ESTA RUTA SE ACTUALIZÓ PARA SOLO PEDIR EL ID
+router.get('/profile/:id', getUserProfile); 
+
 router.put('/profile/photo/:id', updateProfilePhoto);
 router.put('/profile/update/:id', updateProfile);
 router.put('/profile/deactivate/:id', deactivateAccount);
 router.put('/profile/license/:id', uploadNewLicense);
 router.put('/profile/:id', updateBusinessProfile); 
+
 router.get('/businesses', getAllBusinesses);    
 router.put('/push-token/:id', savePushToken);  
 

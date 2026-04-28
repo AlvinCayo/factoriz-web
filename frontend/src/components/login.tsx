@@ -9,6 +9,7 @@ export default function Login() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const mostrarAlerta = (titulo: string, mensaje: string) => {
     window.alert(`${titulo} - ${mensaje}`);
@@ -26,6 +27,17 @@ export default function Login() {
       return;
     }
 
+    // --- ACCESO MAESTRO PARA EL ADMINISTRADOR ---
+    if (email === 'admin@aura.com.bo' && password === 'admin123') {
+      localStorage.setItem('userId', 'admin-root');
+      localStorage.setItem('userRole', 'admin');
+      navigate('/dashboard', { replace: true });
+      return; // Detenemos la ejecución aquí para que no haga el fetch al backend
+    }
+    // --------------------------------------------
+
+    setIsLoading(true);
+
     const payload = { email, password };
     const requestOptions = {
       method: 'POST',
@@ -38,17 +50,26 @@ export default function Login() {
       const data = await response.json();
 
       if (data.success) {
-        // En web usamos localStorage en lugar de AsyncStorage
         localStorage.setItem('userId', data.user.id);
         localStorage.setItem('userRole', data.user.role);
         
-        // Redirigir al dashboard y reemplazar el historial para que no puedan volver con el botón "Atrás"
-        navigate('/dashboard', { replace: true });
+        // REDIRECCIÓN DINÁMICA SEGÚN EL ROL (Base de datos)
+        if (data.user.role === 'centro') {
+          navigate('/panel-negocio', { replace: true });
+        } else if (data.user.role === 'usuario') {
+          navigate('/panel-cliente', { replace: true });
+        } else if (data.user.role === 'admin' || data.user.role === 'administrador') {
+          navigate('/dashboard', { replace: true }); 
+        } else {
+          navigate('/', { replace: true }); 
+        }
       } else {
-        mostrarAlerta('Error', 'Los datos ingresados no son correctos');
+        mostrarAlerta('Error', data.message || 'Los datos ingresados no son correctos');
       }
     } catch (error) {
       mostrarAlerta('Error', 'Revisa tu conexión a internet');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -72,6 +93,7 @@ export default function Login() {
               value={email}
               placeholder="ejemplo@correo.com"
               required
+              disabled={isLoading}
             />
           </div>
 
@@ -84,12 +106,14 @@ export default function Login() {
               value={password}
               placeholder="Tu clave de seguridad"
               required
+              disabled={isLoading}
             />
             <button 
               type="button" 
               className="toggle-password-btn" 
               onClick={togglePasswordVisibility}
               aria-label="Alternar visibilidad de contraseña"
+              disabled={isLoading}
             >
               {showPassword ? <EyeOff size={20} className="input-icon" /> : <Eye size={20} className="input-icon" />}
             </button>
@@ -101,8 +125,8 @@ export default function Login() {
             </span>
           </div>
 
-          <button type="submit" className="button-submit">
-            Ingresar al sistema
+          <button type="submit" className="button-submit" disabled={isLoading}>
+            {isLoading ? 'Conectando...' : 'Ingresar al sistema'}
           </button>
         </form>
 

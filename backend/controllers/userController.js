@@ -12,30 +12,56 @@ async function loginUser(req, res) { /* Código en authController */ }
 
 async function getUserProfile(req, res) {
   const userId = req.params.id;
-  const userRole = req.params.role;
   
-  const qClient = 'SELECT c.*, u.email FROM client_profiles c JOIN users u ON c.user_id = u.id WHERE c.user_id = $1';
-  
-  // Unimos business_profiles con users para traer los horarios también
-  const qBusiness = `
-    SELECT b.*, u.opening_time, u.closing_time, u.working_days, u.email 
-    FROM business_profiles b 
-    JOIN users u ON b.user_id = u.id 
-    WHERE b.user_id = $1
-  `;
-  
-  const isBusiness = userRole === 'centro' || userRole === 'business';
-  const queryText = isBusiness ? qBusiness : qClient;
-
   try {
-    const result = await client.query(queryText, [userId]);
-    if (result.rowCount > 0) {
-      res.json({ success: true, profile: result.rows[0] });
+    // 1. Averiguamos el rol directamente desde la base de datos (Más seguro)
+    const userQuery = await client.query('SELECT role FROM users WHERE id = $1', [userId]);
+    
+    if (userQuery.rowCount === 0) {
+      return res.status(404).json({ success: false, message: 'Usuario no encontrado' });
+    }
+
+    const userRole = userQuery.rows[0].role;
+    const isBusiness = userRole === 'centro' || userRole === 'business';
+
+    // 2. Buscamos el perfil dependiendo del rol
+    if (isBusiness) {
+      const qBusiness = `
+        SELECT b.*, u.opening_time, u.closing_time, u.working_days, u.email 
+        FROM business_profiles b 
+        JOIN users u ON b.user_id = u.id 
+        WHERE b.user_id = $1
+      `;
+      const result = await client.query(qBusiness, [userId]);
+      
+      if (result.rowCount > 0) {
+        const profile = result.rows[0];
+        res.json({ 
+          success: true, 
+          first_name: profile.representative_name, // Lo enviamos como first_name para el frontend
+          profile: profile 
+        });
+      } else {
+        res.status(404).json({ success: false });
+      }
+
     } else {
-      res.status(404).json({ success: false });
+      const qClient = 'SELECT c.*, u.email FROM client_profiles c JOIN users u ON c.user_id = u.id WHERE c.user_id = $1';
+      const result = await client.query(qClient, [userId]);
+      
+      if (result.rowCount > 0) {
+        const profile = result.rows[0];
+        res.json({ 
+          success: true, 
+          first_name: profile.first_name, 
+          profile: profile 
+        });
+      } else {
+        res.status(404).json({ success: false });
+      }
     }
   } catch (error) {
-    res.status(500).json({ success: false });
+    res.status(500).json({ success: false, error: 'Error al obtener perfil' });
   }
 }
 
@@ -130,7 +156,6 @@ async function updateBusinessProfile(req, res) {
 }
 
 async function getAllBusinesses(req, res) {
-  const client = require('../db');
   try {
     const queryText = `
       SELECT u.id, u.opening_time, u.closing_time, u.working_days, 
@@ -159,7 +184,6 @@ async function updateShopPhotos(req, res) {
 }
 
 async function savePushToken(req, res) {
-  const client = require('../db');
   try {
     const { id } = req.params;
     const { token } = req.body;

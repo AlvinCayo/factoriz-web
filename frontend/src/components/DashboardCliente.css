@@ -1,0 +1,252 @@
+/* frontend/src/components/DashboardCliente.css */
+
+/* Reutilizamos los estilos base y variables que ya definiste en Home.css */
+@import '../pages/Home.css'; 
+
+:root {
+  /* Paleta de colores de referencia "Nuestra App" */
+  --aura-gold: #d4af37;
+  --aura-dark: #1a1a1a;
+  --aura-grey: #666666;
+  --bg-aura-light: #fdfdfd;
+}
+
+.client-dashboard-layout {
+  min-height: 100vh;
+  background-color: var(--bg-aura-light);
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Ajustes específicos para el navbar del usuario --- */
+.navbar.user-navbar {
+  box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+}
+
+.user-welcome {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-right: 15px;
+}
+
+.user-name-text {
+  font-weight: 600;
+  color: var(--aura-dark);
+}
+
+.avatar-small.gold {
+  background-color: var(--aura-gold);
+  color: #fff;
+  border: none;
+}
+
+.btn-logout-client {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--aura-dark);
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: opacity 0.3s ease;
+}
+
+.btn-logout-client:hover {
+  opacity: 0.8;
+}
+
+/* --- ESTILOS PARA LA PÁGINA DE PROMOCIÓN DE LA APP --- */
+.app-promo-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
+  padding: 4rem 8%;
+  flex: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.promo-text-section {
+  flex: 1;
+  max-width: 600px;
+}
+
+.badge-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgba(212, 175, 55, 0.1);
+  color: var(--aura-gold);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.promo-title {
+  font-size: 3.5rem;
+  line-height: 1.1;
+  color: var(--aura-dark);
+  margin-bottom: 1.5rem;
+  font-family: var(--font-primary);
+}
+
+.text-gold {
+  color: var(--aura-gold);
+}
+
+.promo-description {
+  font-size: 1.15rem;
+  color: var(--aura-grey);
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+}
+
+.download-actions {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+/* --- BOTÓN DE DESCARGA REAL (Enlaces <a>) --- */
+.store-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+  background-color: var(--aura-dark);
+  color: white;
+  text-decoration: none; /* Elimina el subrayado azul feo de los enlaces */
+  border: none;
+  padding: 12px 28px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.store-button:hover {
+  transform: translateY(-4px);
+  opacity: 0.95;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  color: white; /* Asegura que no cambie de color al pasar el mouse */
+}
+
+.store-text {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.store-text span {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  letter-spacing: 0.5px;
+}
+
+.store-text strong {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+/* --- QR FUNCIONAL --- */
+/* --- QR FUNCIONAL --- */
+.qr-section {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap; /* TRUCO 1: Permite que el contenido "respire" y se acomode */
+  gap: 1.5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  width: 100%; /* Asegura que la sección use todo el ancho posible */
+}
+
+.qr-wrapper {
+  flex-shrink: 0; 
+  background-color: #fff;
+  padding: 10px; 
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08); 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qr-section p {
+  font-size: 1rem;
+  color: var(--aura-grey);
+  flex: 1; 
+  min-width: 250px; /* TRUCO 2 (LA MAGIA): Obliga al texto a tener al menos 250px de ancho y no dejarse aplastar por el celular */
+  line-height: 1.6;
+  margin: 0;
+  text-align: left; 
+}
+
+/* --- MOCKUP SECTION (Celular) --- */
+.promo-image-section {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.promo-circle-bg {
+  position: absolute;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0) 70%);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.promo-phone-mockup {
+  position: relative;
+  z-index: 1;
+  max-height: 650px;
+  width: auto;
+  filter: drop-shadow(-20px 20px 30px rgba(0,0,0,0.15));
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+
+/* --- RESPONSIVIDAD PARA PANTALLAS MÁS PEQUEÑAS --- */
+@media (max-width: 992px) {
+  .app-promo-layout {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 5%;
+  }
+  
+  .qr-section {
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+  .download-actions {
+    justify-content: center;
+  }
+
+  .promo-circle-bg {
+    width: 300px;
+    height: 300px;
+  }
+
+  .promo-phone-mockup {
+    max-height: 450px;
+  }
+}
